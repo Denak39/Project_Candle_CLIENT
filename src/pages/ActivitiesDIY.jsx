@@ -27,7 +27,6 @@ class Activities extends React.Component {
   // filter by category
   // display the lessons
   render() {
-    //console.log(lesson);
     return (
       <div>
         {this.state.activities.map((activity) => {
@@ -35,8 +34,11 @@ class Activities extends React.Component {
             <div className="box">
               <div className="banner">
                 <div className="p" key={activity._id}>
-                  <Link to={`/activity/${activity._id}`}>
-                    <h1>Lesson title: {activity.title}</h1>
+                  <Link to={`/activities/${activity._id}`}>
+                    <h1>{activity.title}</h1>
+                    <h2>{activity.subcategories}</h2>
+                    <p>{activity.duration}</p>
+                    <p>{activity.difficulty} </p>
                   </Link>
                 </div>
               </div>
