@@ -44,9 +44,9 @@ export default {
       .catch(errorHandler);
   },
 
-  getItems() {
+  getAllActivities() {
     return service
-      .get("/api/items")
+      .get("/api/activities")
       .then((res) => res.data)
       .catch(errorHandler);
   },
