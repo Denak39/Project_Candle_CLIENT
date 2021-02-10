@@ -29,7 +29,7 @@ class StepbyStep extends React.Component {
     if (this.state.activity === null) return null;
     console.log(this.state.activity);
     const steps = this.state.activity.steps;
-    console.log(steps);
+
     return (
       <div>
         {this.state.display && (

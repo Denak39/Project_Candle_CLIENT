@@ -64,4 +64,11 @@ export default {
       .then((res) => res.data)
       .catch(errorHandler);
   },
+
+  updateUser() {
+    return service
+      .patch("/api/user/me")
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
 };
