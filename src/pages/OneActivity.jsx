@@ -7,8 +7,36 @@ class OneActivity extends React.Component {
   static contextType = UserContext;
   state = {
     activity: null,
+    userActivities: null,
   };
+  // populate?
+  // this.context.user
+  handleSubmit = (event) => {
+    // event.preventDefault();
+    const key = event.target.name;
+    const value = event.target.value;
+    const activityId = this.props.match.params.id;
+    const useractivities = this.context.user.userActivities;
+    const object = { _id: activityId, completed: false };
+    this.setState({ [key]: value });
 
+    apiHandler
+      .updateUser(this.state)
+      .then((data) => {
+        console.log("activity id >>", activityId);
+        console.log("useractivities>>", this.context.user.userActivities);
+        console.log(useractivities.push(object));
+        this.context.setUser(data);
+        console.log(this.context.user);
+
+        useractivities.push(object);
+        // this.props.history.push("/profile");
+      })
+      .catch((error) => {
+        console.log(error);
+        // Display error message here, if you set the state
+      });
+  };
   componentDidMount() {
     const activityId = this.props.match.params.id;
     apiHandler.getOneActivity(activityId).then((activity) => {
@@ -16,9 +44,7 @@ class OneActivity extends React.Component {
       this.setState({ activity });
     });
   }
-  // get the category from the path
-  // filter by category
-  // display the lessons
+
   render() {
     if (this.state.activity === null) return null;
     console.log(this.state.activity);
@@ -45,7 +71,7 @@ class OneActivity extends React.Component {
             </ul>
           </div>
           <Link to={`/activities/${this.state.activity._id}/steps`}>
-            <button onClick={handleSubmit}>Je tente !</button>{" "}
+            <button onClick={this.handleSubmit}>Je tente !</button>{" "}
           </Link>
         </div>
       )
