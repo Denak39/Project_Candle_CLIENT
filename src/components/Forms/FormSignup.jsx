@@ -11,6 +11,7 @@ class FormSignup extends Component {
   state = {
     email: "",
     password: "",
+    name: "",
   };
 
   handleChange = (event) => {

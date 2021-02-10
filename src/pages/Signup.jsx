@@ -1,8 +1,8 @@
 import React from "react";
-import FormSignup from "../components/Forms/FormSignup";
+import MasterForm from "../components/Forms/MasterForm";
 
 const Signup = (props) => {
-  return <FormSignup />;
+  return <MasterForm />;
 };
 
 export default Signup;

@@ -7,7 +7,8 @@ class OneActivity extends React.Component {
   static contextType = UserContext;
   state = {
     activity: null,
-    userActivities: null,
+    userActivities: [],
+    value: "",
   };
   // populate?
   // this.context.user
@@ -19,7 +20,7 @@ class OneActivity extends React.Component {
     const useractivities = this.context.user.userActivities;
     const object = { _id: activityId, completed: false };
     this.setState({ [key]: value });
-
+    console.log(event.target.name);
     apiHandler
       .updateUser(this.state)
       .then((data) => {
@@ -37,10 +38,10 @@ class OneActivity extends React.Component {
         // Display error message here, if you set the state
       });
   };
+
   componentDidMount() {
     const activityId = this.props.match.params.id;
     apiHandler.getOneActivity(activityId).then((activity) => {
-      console.log(activity);
       this.setState({ activity });
     });
   }
@@ -71,7 +72,9 @@ class OneActivity extends React.Component {
             </ul>
           </div>
           <Link to={`/activities/${this.state.activity._id}/steps`}>
-            <button onClick={this.handleSubmit}>Je tente !</button>{" "}
+            <button type="button" onClick={this.onAddItem}>
+              Je tente !
+            </button>{" "}
           </Link>
         </div>
       )
