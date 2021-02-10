@@ -31,17 +31,18 @@ class Activities extends React.Component {
       <div>
         {this.state.activities.map((activity) => {
           return (
-            <div className="box">
-              <div className="banner">
-                <div className="p" key={activity._id}>
-                  <Link to={`/activities/${activity._id}`}>
-                    <h1>{activity.title}</h1>
-                    <h2>{activity.subcategories}</h2>
-                    <p>{activity.duration}</p>
-                    <p>{activity.difficulty} </p>
-                  </Link>
+            <div className="activities" key={activity._id}>
+              <Link to={`/activities/${activity._id}`}>
+                <div className="activities-image">
+                  <img src={activity.image} alt={activity.title} />
                 </div>
-              </div>
+                <div className="activities-content">
+                  <h1>{activity.title}</h1>
+                  <h2>{activity.subcategories}</h2>
+                  <p>{activity.duration} min</p>
+                  <p>{activity.difficulty}</p>
+                </div>
+              </Link>
             </div>
           );
         })}

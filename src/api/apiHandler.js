@@ -50,9 +50,17 @@ export default {
       .then((res) => res.data)
       .catch(errorHandler);
   },
+
   getOneActivity(activityId) {
     return service
       .get(`/api/activities/${activityId}`)
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
+
+  getOneUser() {
+    return service
+      .get("/api/user/me")
       .then((res) => res.data)
       .catch(errorHandler);
   },

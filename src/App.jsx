@@ -8,6 +8,8 @@ import ActivitiesDIY from "./pages/ActivitiesDIY";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import OneActivity from "./pages/OneActivity";
+import StepbyStep from "./pages/StepbyStep";
+
 function App() {
   return (
     <div className="App">
@@ -17,6 +19,7 @@ function App() {
         <Route exact path="/signin" component={Signin} />
         <Route exact path="/signup" component={Signup} />
         <Route exact path="/activities/DIY" component={ActivitiesDIY}></Route>
+        <Route exact path="/activities/:id/steps" component={StepbyStep} />
         <Route exact path="/activities/:id" component={OneActivity} />
         <ProtectedRoute exact path="/profile" component={Profile} />
       </Switch>
