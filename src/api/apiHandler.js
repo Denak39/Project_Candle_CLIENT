@@ -71,4 +71,11 @@ export default {
       .then((res) => res.data)
       .catch(errorHandler);
   },
+
+  updateActivity(activityId, data) {
+    return service
+      .patch(`/api/activities/${activityId}`, data)
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
 };

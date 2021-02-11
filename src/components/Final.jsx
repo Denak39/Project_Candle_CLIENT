@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import UserContext from "../components/Auth/UserContext";
 import apiHandler from "../api/apiHandler";
+import { Link } from "react-router-dom";
 
 export default class Final extends Component {
   static contextType = UserContext;
   state = {
     user: "",
     feeling: "",
+    grades: "",
   };
 
   // handleChange = (event) => {
@@ -17,6 +19,27 @@ export default class Final extends Component {
   //   console.log("Hello", this.state.feeling);
   // };
 
+  handleChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  handleClick2 = (event) => {
+    const { name, value } = event.target;
+    const gradesCopy = [...this.state.grades];
+    const gradesIndex = gradesCopy.findIndex((grades) => grades === value);
+    if (event.target.checked === true) {
+      gradesCopy.push(value);
+    } else {
+      gradesCopy.splice(gradesIndex, 1);
+    }
+    this.setState({
+      [name]: gradesCopy,
+    });
+  };
+
   handleSubmit = (event) => {
     event.preventDefault();
     const key = event.target.name;
@@ -26,7 +49,7 @@ export default class Final extends Component {
     console.log("Hello", this.state.feeling);
 
     apiHandler
-      .updateUser(this.state)
+      .updateActivity(this.props.activityId, this.state)
       .then((data) => {
         console.log("HelloBis", this.state.feeling);
         this.context.setUser(data);
@@ -56,40 +79,123 @@ export default class Final extends Component {
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}
         >
-          <div className="field">
-            <label htmlFor="grade">
-              Comment avez-vous trouvez cette activité ?
-            </label>
-            <input type="text" id="grade" name="grade" required />
-          </div>
-          <div className="field">
-            <label htmlFor="feeling">
-              Comment vous sentez-vous après cette activité ?
-            </label>
-            <input type="text" id="feeling" name="feeling" />
-          </div>
-          <button>Envoyer</button>
-        </form>
+          <h1 className="field">Comment avez-vous trouvez cette activité ?</h1>
 
-        <form
-          className="form"
-          // onChange={this.handleChange}
-          onSubmit={this.handleSubmit}
-        >
-          <div className="field">
-            <label htmlFor="grade">
-              Comment avez-vous trouvez cette activité ?
-            </label>
-            <input
-              type="text"
-              id="feeling"
-              name="feeling"
-              value="Relaxé(e)"
-              required
-            />
+          <div>
+            <div>
+              <input
+                className="form-control"
+                id="grades"
+                name="grades"
+                type="radio"
+                value="1"
+                onChange={this.handleChange}
+              />
+              <label htmlFor="1">
+                <span>1</span>
+              </label>
+            </div>
+            <div>
+              <input
+                className="form-control"
+                id="grades"
+                name="grades"
+                type="radio"
+                value="2"
+                onChange={this.handleChange}
+              />
+              <label htmlFor="2">
+                <span>2</span>
+              </label>
+            </div>
+            <div>
+              <input
+                className="form-control"
+                id="grades"
+                name="grades"
+                type="radio"
+                value="3"
+                onChange={this.handleChange}
+              />
+              <label htmlFor="3">
+                <span>3</span>
+              </label>
+            </div>
+            <div>
+              <input
+                className="form-control"
+                id="grades"
+                name="grades"
+                type="radio"
+                value="4"
+                onChange={this.handleChange}
+              />
+              <label htmlFor="4">
+                <span>4</span>
+              </label>
+            </div>
           </div>
 
-          <button>Relaxée</button>
+          <h1 className="field">
+            Comment vous sentez-vous après cette activité
+          </h1>
+          <div>
+            <div>
+              <input
+                className="form-control"
+                id="feeling"
+                name="feeling"
+                type="radio"
+                value="Relaxé(e)"
+                onChange={this.handleChange}
+              />
+              <label htmlFor="Relaxé(e)">
+                <span>Relaxé(e)</span>
+              </label>
+            </div>
+            <div>
+              <input
+                className="form-control"
+                id="feeling"
+                name="feeling"
+                type="radio"
+                value="Boosté(e)"
+                onChange={this.handleChange}
+              />
+              <label htmlFor="Boosté(e)">
+                <span>Boosté(e)</span>
+              </label>
+            </div>
+            <div>
+              <input
+                className="form-control"
+                id="feeling"
+                name="feeling"
+                type="radio"
+                value="Inspiré(e)"
+                onChange={this.handleChange}
+              />
+              <label htmlFor="Inspiré(e)">
+                <span>Inspiré(e)</span>
+              </label>
+            </div>
+            <div>
+              <input
+                className="form-control"
+                id="feeling"
+                name="feeling"
+                type="radio"
+                value="Frustré(e)"
+                onChange={this.handleChange}
+              />
+              <label htmlFor="Frustré(e)">
+                <span>Frustré(e)</span>
+              </label>
+            </div>
+          </div>
+          <Link to={`/`}>
+            <button>Envoyer</button>
+          </Link>
         </form>
       </div>
     );
