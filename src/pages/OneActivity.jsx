@@ -14,24 +14,12 @@ class OneActivity extends React.Component {
   // this.context.user
   handleSubmit = (event) => {
     // event.preventDefault();
-    const key = event.target.name;
-    const value = event.target.value;
     const activityId = this.props.match.params.id;
-    const useractivities = this.context.user.userActivities;
-    const object = { _id: activityId, completed: false };
-    this.setState({ [key]: value });
-    console.log(event.target.name);
     apiHandler
       .updateUser(this.state)
       .then((data) => {
-        console.log("activity id >>", activityId);
-        console.log("useractivities>>", this.context.user.userActivities);
-        console.log(useractivities.push(object));
         this.context.setUser(data);
-        console.log(this.context.user);
-
-        useractivities.push(object);
-        // this.props.history.push("/profile");
+        // this.props.history.push("");
       })
       .catch((error) => {
         console.log(error);
