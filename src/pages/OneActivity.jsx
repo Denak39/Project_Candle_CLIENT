@@ -72,7 +72,7 @@ class OneActivity extends React.Component {
             </ul>
           </div>
           <Link to={`/activities/${this.state.activity._id}/steps`}>
-            <button type="button" onClick={this.onAddItem}>
+            <button type="button" onClick={this.handleSubmit}>
               Je tente !
             </button>{" "}
           </Link>
