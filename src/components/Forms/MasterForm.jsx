@@ -17,6 +17,7 @@ class MasterForm extends React.Component {
       profileImage: "",
       interest: [],
       animals: [],
+      checked: false,
     };
   }
   handleChange = (event) => {
@@ -25,6 +26,40 @@ class MasterForm extends React.Component {
       [name]: value,
     });
     console.log(this.state.genre);
+  };
+
+  handleClick = (event) => {
+    const { name, value } = event.target;
+    const animalsCopy = [...this.state.animals];
+    const animalsIndex = animalsCopy.findIndex((animal) => animal === value);
+
+    if (event.target.checked === true) {
+      animalsCopy.push(value);
+    } else {
+      animalsCopy.splice(animalsIndex, 1);
+    }
+    this.setState({
+      [name]: animalsCopy,
+    });
+    if (event.target.value === "Aucun" && event.target.checked === true) {
+      this.setState({ checked: false, animals: ["Aucun"] });
+    }
+  };
+
+  handleClick2 = (event) => {
+    const { name, value } = event.target;
+    const interestCopy = [...this.state.interest];
+    const interestIndex = interestCopy.findIndex(
+      (interest) => interest === value
+    );
+    if (event.target.checked === true) {
+      interestCopy.push(value);
+    } else {
+      interestCopy.splice(interestIndex, 1);
+    }
+    this.setState({
+      [name]: interestCopy,
+    });
   };
 
   handleSubmit = (event) => {
@@ -121,11 +156,14 @@ class MasterForm extends React.Component {
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
             interests={this.state.interest}
+            handleClick2={this.handleClick2}
           />
           <Step6
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
             animals={this.state.animals}
+            handleClick={this.handleClick}
+            checked={this.state.checked}
           />
           {this.previousButton()}
           {this.nextButton()}
@@ -286,96 +324,146 @@ function Step5(props) {
   return (
     <div className="form-group">
       <label htmlFor="interest" hidden></label>
-      <input
-        className="form-control"
-        id="interest"
-        name="interest"
-        type="button"
-        placeholder="Décoration"
-        value="Décoration"
-        onChange={props.handleChange}
-      />
-      <input
-        className="form-control"
-        id="interest"
-        name="interest"
-        type="button"
-        placeholder="Art du papier"
-        value="Art du papier"
-        onChange={props.handleChange}
-      />
-      <input
-        className="form-control"
-        id="interest"
-        name="interest"
-        type="button"
-        placeholder="Bricolage"
-        value="Bricolage"
-        onChange={props.handleChange}
-      />
-      <input
-        className="form-control"
-        id="interest"
-        name="interest"
-        type="button"
-        placeholder="Peinture"
-        value="Peinture"
-        onChange={props.handleChange}
-      />
-      <input
-        className="form-control"
-        id="interest"
-        name="interest"
-        type="button"
-        placeholder="Petits plaisirs"
-        value="Petits plaisirs"
-        onChange={props.handleChange}
-      />
-      <input
-        className="form-control"
-        id="interest"
-        name="interest"
-        type="button"
-        placeholder="Activité en plein air"
-        value="Activité en plein air"
-        onChange={props.handleChange}
-      />
-      <input
-        className="form-control"
-        id="interest"
-        name="interest"
-        type="button"
-        placeholder="Mercerie"
-        value="Mercerie"
-        onChange={props.handleChange}
-      />
-      <input
-        className="form-control"
-        id="interest"
-        name="interest"
-        type="button"
-        placeholder="Jardinage"
-        value="Jardinage"
-        onChange={props.handleChange}
-      />
-      <input
-        className="form-control"
-        id="interest"
-        name="interest"
-        type="button"
-        placeholder="Modelage"
-        value="Modelage"
-        onChange={props.handleChange}
-      />
-      <input
-        className="form-control"
-        id="interest"
-        name="interest"
-        type="button"
-        placeholder="Activité de groupe"
-        value="Activité de groupe"
-        onChange={props.handleChange}
-      />
+      <div>
+        <input
+          className="form-control"
+          id="interest"
+          name="interest"
+          type="checkbox"
+          placeholder="Décoration"
+          value="Décoration"
+          onChange={props.handleClick2}
+        />
+        <label htmlFor="Décoration">
+          <span>Décoration</span>
+        </label>
+      </div>
+      <div>
+        <input
+          className="form-control"
+          id="interest"
+          name="interest"
+          type="checkbox"
+          placeholder="Art du papier"
+          value="Art du papier"
+          onChange={props.handleClick2}
+        />
+        <label htmlFor="Art du papier">
+          <span>Art du papier</span>
+        </label>
+      </div>
+      <div>
+        <input
+          className="form-control"
+          id="interest"
+          name="interest"
+          type="checkbox"
+          placeholder="Bricolage"
+          value="Bricolage"
+          onChange={props.handleClick2}
+        />
+        <label htmlFor="Bricolage">
+          <span>Bricolage</span>
+        </label>
+      </div>
+      <div>
+        <input
+          className="form-control"
+          id="interest"
+          name="interest"
+          type="checkbox"
+          placeholder="Peinture"
+          value="Peinture"
+          onChange={props.handleClick2}
+        />
+        <label htmlFor="Peinture">
+          <span>Peinture</span>
+        </label>
+      </div>
+      <div>
+        <input
+          className="form-control"
+          id="interest"
+          name="interest"
+          type="checkbox"
+          placeholder="Petits plaisirs"
+          value="Petits plaisirs"
+          onChange={props.handleClick2}
+        />
+        <label htmlFor="Petits plaisirs">
+          <span>Petits plaisirs</span>
+        </label>
+      </div>
+      <div>
+        <input
+          className="form-control"
+          id="interest"
+          name="interest"
+          type="checkbox"
+          placeholder="Activité en plein air"
+          value="Activité en plein air"
+          onChange={props.handleClick2}
+        />
+        <label htmlFor="Activité en plein air">
+          <span>Activité en plein air</span>
+        </label>
+      </div>
+      <div>
+        <input
+          className="form-control"
+          id="interest"
+          name="interest"
+          type="checkbox"
+          placeholder="Mercerie"
+          value="Mercerie"
+          onChange={props.handleClick2}
+        />
+        <label htmlFor="Mercerie">
+          <span>Mercerie</span>
+        </label>
+      </div>
+      <div>
+        <input
+          className="form-control"
+          id="interest"
+          name="interest"
+          type="checkbox"
+          placeholder="Jardinage"
+          value="Jardinage"
+          onChange={props.handleClick2}
+        />
+        <label htmlFor="Jardinage">
+          <span>Jardinage</span>
+        </label>
+      </div>
+      <div>
+        <input
+          className="form-control"
+          id="interest"
+          name="interest"
+          type="checkbox"
+          placeholder="Modelage"
+          value="Modelage"
+          onChange={props.handleClick2}
+        />
+        <label htmlFor="Modelage">
+          <span>Modelage</span>
+        </label>
+      </div>
+      <div>
+        <input
+          className="form-control"
+          id="interest"
+          name="interest"
+          type="checkbox"
+          placeholder="Activité de groupe"
+          value="Activité de groupe"
+          onChange={props.handleClick2}
+        />
+        <label htmlFor="Activité de groupe">
+          <span>Activité de groupe</span>
+        </label>
+      </div>
     </div>
   );
 }
@@ -387,51 +475,80 @@ function Step6(props) {
     <React.Fragment>
       <div className="form-group">
         <label htmlFor="animals" hidden></label>
-        <input
-          className="form-control"
-          id="animals"
-          name="animals"
-          type="button"
-          placeholder="Chat"
-          value="Chat"
-          onChange={props.handleChange}
-        />
-        <input
-          className="form-control"
-          id="animals"
-          name="animals"
-          type="button"
-          placeholder="Chien"
-          value="Chien"
-          onChange={props.handleChange}
-        />
-        <input
-          className="form-control"
-          id="animals"
-          name="animals"
-          type="button"
-          placeholder="Rongeur (lapin, hamster, etc.)"
-          value="Rongeur"
-          onChange={props.handleChange}
-        />
-        <input
-          className="form-control"
-          id="animals"
-          name="animals"
-          type="button"
-          placeholder="Autres"
-          value="Autres"
-          onChange={props.handleChange}
-        />
-        <input
-          className="form-control"
-          id="animals"
-          name="animals"
-          type="button"
-          placeholder="Je n'ai aucun animal"
-          value="Aucun"
-          onChange={props.handleChange}
-        />
+        <div>
+          <input
+            className="form-control"
+            id="animals"
+            name="animals"
+            type="checkbox"
+            placeholder="Chat"
+            value="Chat"
+            onChange={props.handleClick}
+            checked={props.checked}
+          />
+          <label htmlFor="Chat">
+            <span>Chat</span>
+          </label>
+        </div>
+        <div>
+          <input
+            className="form-control"
+            id="animals"
+            name="animals"
+            type="checkbox"
+            placeholder="Chien"
+            value="Chien"
+            onChange={props.handleClick}
+            checked={props.checked}
+          />
+          <label htmlFor="Chien">
+            <span>Chien</span>
+          </label>
+        </div>
+        <div>
+          <input
+            className="form-control"
+            id="animals"
+            name="animals"
+            type="checkbox"
+            placeholder="Rongeur"
+            value="Rongeur"
+            onChange={props.handleClick}
+            checked={props.checked}
+          />
+          <label htmlFor="Rongeur">
+            <span>Rongeur (lapin, hamster etc)</span>
+          </label>
+        </div>
+        <div>
+          <input
+            className="form-control"
+            id="animals"
+            name="animals"
+            type="checkbox"
+            placeholder="Autres"
+            value="Autres"
+            onChange={props.handleClick}
+            checked={props.checked}
+          />
+          <label htmlFor="Autres">
+            <span>Autres</span>
+          </label>
+        </div>
+        <div>
+          <input
+            className="form-control"
+            id="animals"
+            name="animals"
+            type="checkbox"
+            placeholder="Aucun"
+            value="Aucun"
+            onChange={props.handleClick}
+          />
+          <label htmlFor="Aucun">
+            <span>Aucun</span>
+          </label>
+        </div>
       </div>
       <button className="btn btn-success btn-block">Sign up</button>
     </React.Fragment>
