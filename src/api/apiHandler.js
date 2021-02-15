@@ -71,6 +71,12 @@ export default {
       .then((res) => res.data)
       .catch(errorHandler);
   },
+  updateUser2(data) {
+    return service
+      .patch("/api/user/me2", data)
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
 
   updateActivity(activityId, data) {
     return service

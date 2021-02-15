@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "axios": "^0.21.1",
     "dayjs": "^1.10.4",
+    "framer-motion": "^3.3.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-laag": "^2.0.2",
