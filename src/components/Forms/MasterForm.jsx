@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 import UserContext from "../Auth/UserContext";
 import apiHandler from "../../api/apiHandler";
 
@@ -77,6 +77,7 @@ class MasterForm extends React.Component {
       .signup(this.state)
       .then((data) => {
         this.context.setUser(data);
+        this.props.history.push("/");
       })
       .catch((error) => {
         console.log(error);
@@ -550,6 +551,7 @@ function Step6(props) {
           </label>
         </div>
       </div>
+
       <button className="btn btn-success btn-block">Sign up</button>
     </React.Fragment>
   );

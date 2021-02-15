@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import NavMain from "./components/NavMain";
+// import NavMain from "./components/NavMain";
 import Home from "./pages/Home";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
@@ -13,7 +13,7 @@ import StepbyStep from "./pages/StepbyStep";
 function App() {
   return (
     <div className="App">
-      <NavMain />
+      {/* <NavMain /> */}
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/signin" component={Signin} />
