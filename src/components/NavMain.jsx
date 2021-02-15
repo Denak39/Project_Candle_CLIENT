@@ -64,6 +64,7 @@ const NavMain = (props) => {
         <h1>Bonjour {context.user && context.user.name} !</h1>
       </div>
       <Mood />
+
     </div>
   );
 };
