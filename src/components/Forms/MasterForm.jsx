@@ -17,7 +17,6 @@ class MasterForm extends React.Component {
       profileImage: "",
       interest: [],
       animals: [],
-      checked: false,
     };
   }
   handleChange = (event) => {
@@ -31,19 +30,19 @@ class MasterForm extends React.Component {
   handleClick = (event) => {
     const { name, value } = event.target;
     const animalsCopy = [...this.state.animals];
-    const animalsIndex = animalsCopy.findIndex((animal) => animal === value);
+    // const animalsIndex = animalsCopy.findIndex((animal) => animal === value);
 
-    if (event.target.checked === true) {
-      animalsCopy.push(value);
-    } else {
-      animalsCopy.splice(animalsIndex, 1);
-    }
+    // if (event.target.checked === true) {
+    animalsCopy.push(value);
+    // } else {
+    //   animalsCopy.splice(animalsIndex, 1);
+    // }
     this.setState({
       [name]: animalsCopy,
     });
-    if (event.target.value === "Aucun" && event.target.checked === true) {
-      this.setState({ checked: false, animals: ["Aucun"] });
-    }
+    // if (event.target.value === "Aucun" && event.target.checked === true) {
+    //   this.setState({ checked: false, animals: ["Aucun"] });
+    // }
   };
 
   handleClick2 = (event) => {
@@ -164,7 +163,6 @@ class MasterForm extends React.Component {
             handleChange={this.handleChange}
             animals={this.state.animals}
             handleClick={this.handleClick}
-            checked={this.state.checked}
           />
           {this.previousButton()}
           {this.nextButton()}
@@ -322,6 +320,7 @@ function Step5(props) {
   if (props.currentStep !== 5) {
     return null;
   }
+
   return (
     <div className="form-group">
       <label htmlFor="interest" hidden></label>
@@ -481,11 +480,10 @@ function Step6(props) {
             className="form-control"
             id="animals"
             name="animals"
-            type="checkbox"
+            type="radio"
             placeholder="Chat"
             value="Chat"
-            onChange={props.handleClick}
-            checked={props.checked}
+            onChange={props.handleChange}
           />
           <label htmlFor="Chat">
             <span>Chat</span>
@@ -496,11 +494,10 @@ function Step6(props) {
             className="form-control"
             id="animals"
             name="animals"
-            type="checkbox"
+            type="radio"
             placeholder="Chien"
             value="Chien"
-            onChange={props.handleClick}
-            checked={props.checked}
+            onChange={props.handleChange}
           />
           <label htmlFor="Chien">
             <span>Chien</span>
@@ -511,40 +508,25 @@ function Step6(props) {
             className="form-control"
             id="animals"
             name="animals"
-            type="checkbox"
-            placeholder="Rongeur"
-            value="Rongeur"
-            onChange={props.handleClick}
-            checked={props.checked}
+            type="radio"
+            placeholder="Les 2"
+            value="Chat et Chien"
+            onChange={props.handleChange}
           />
           <label htmlFor="Rongeur">
-            <span>Rongeur (lapin, hamster etc)</span>
+            <span>Chat et Chien</span>
           </label>
         </div>
+
         <div>
           <input
             className="form-control"
             id="animals"
             name="animals"
-            type="checkbox"
-            placeholder="Autres"
-            value="Autres"
-            onChange={props.handleClick}
-            checked={props.checked}
-          />
-          <label htmlFor="Autres">
-            <span>Autres</span>
-          </label>
-        </div>
-        <div>
-          <input
-            className="form-control"
-            id="animals"
-            name="animals"
-            type="checkbox"
+            type="radio"
             placeholder="Aucun"
             value="Aucun"
-            onChange={props.handleClick}
+            onChange={props.handleChange}
           />
           <label htmlFor="Aucun">
             <span>Aucun</span>

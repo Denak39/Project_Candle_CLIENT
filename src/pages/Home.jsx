@@ -8,7 +8,7 @@ class Home extends React.Component {
       <div>
         <NavMain />
         <h1>Home Page ∆</h1>
-        <Link to="/">
+        <Link to="/discover">
           <div>
             <img src="" alt="" />
             <h2>En panne d'inspiration ?</h2>

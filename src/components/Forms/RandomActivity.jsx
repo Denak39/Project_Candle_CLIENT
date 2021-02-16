@@ -13,7 +13,6 @@ class MasterForm extends React.Component {
       categories: "",
       duration: "",
       activities: [],
-      checked: false,
     };
   }
 
@@ -24,47 +23,14 @@ class MasterForm extends React.Component {
     });
   };
 
-  handleClick = (event) => {
-    const { name, value } = event.target;
-    const animalsCopy = [...this.state.animals];
-    const animalsIndex = animalsCopy.findIndex((animal) => animal === value);
-
-    if (event.target.checked === true) {
-      animalsCopy.push(value);
-    } else {
-      animalsCopy.splice(animalsIndex, 1);
-    }
-    this.setState({
-      [name]: animalsCopy,
-    });
-    if (event.target.value === "Aucun" && event.target.checked === true) {
-      this.setState({ checked: false, animals: ["Aucun"] });
-    }
-  };
-
-  handleClick2 = (event) => {
-    const { name, value } = event.target;
-    const interestCopy = [...this.state.interest];
-    const interestIndex = interestCopy.findIndex(
-      (interest) => interest === value
-    );
-    if (event.target.checked === true) {
-      interestCopy.push(value);
-    } else {
-      interestCopy.splice(interestIndex, 1);
-    }
-    this.setState({
-      [name]: interestCopy,
-    });
-  };
-
   handleSubmit = (event) => {
     event.preventDefault();
     apiHandler
-      .signup(this.state)
+      .getAllActivities()
       .then((data) => {
         this.context.setUser(data);
         this.props.history.push("/");
+        console.log(data);
       })
       .catch((error) => {
         console.log(error);
@@ -103,7 +69,7 @@ class MasterForm extends React.Component {
 
   nextButton() {
     let currentStep = this.state.currentStep;
-    if (currentStep < 6) {
+    if (currentStep < 2) {
       return (
         <button
           className="btn btn-primary float-right"
@@ -119,7 +85,6 @@ class MasterForm extends React.Component {
   render() {
     return (
       <React.Fragment>
-        <h1>React Wizard Form</h1>
         <p>Step {this.state.currentStep} </p>
 
         <form onSubmit={this.handleSubmit}>
@@ -147,7 +112,6 @@ function Step1(props) {
   return (
     <div className="form-group">
       <div>
-        <label htmlFor="genre">Genre</label>
         <input
           className="form-control"
           id="categories"
@@ -156,14 +120,11 @@ function Step1(props) {
           value="Cosy"
           onChange={props.handleChange}
         />
-        <input
-          className="form-control"
-          id="categories"
-          name="categories"
-          type="radio"
-          value="Plein air"
-          onChange={props.handleChange}
-        />
+        <label htmlFor="Cosy">
+          <span>On se détend</span>
+        </label>
+      </div>
+      <div>
         <input
           className="form-control"
           id="categories"
@@ -172,14 +133,35 @@ function Step1(props) {
           value="DIY"
           onChange={props.handleChange}
         />
+        <label htmlFor="DIY">
+          <span>On s'occupe</span>
+        </label>
+      </div>
+      <div>
         <input
           className="form-control"
           id="categories"
           name="categories"
           type="radio"
-          value={this.state.categories}
+          value="Plein air"
           onChange={props.handleChange}
         />
+        <label htmlFor="Plein air">
+          <span>On se booste</span>
+        </label>
+      </div>
+      <div>
+        <input
+          className="form-control"
+          id="categories"
+          name="categories"
+          type="radio"
+          value=""
+          onChange={props.handleChange}
+        />
+        <label htmlFor="Aucun">
+          <span>Surpends-moi</span>
+        </label>
       </div>
     </div>
   );
@@ -189,6 +171,8 @@ function Step2(props) {
   if (props.currentStep !== 2) {
     return null;
   }
+
+  console.log("props", props.duration);
   return (
     <React.Fragment>
       <div className="form-group">
@@ -197,19 +181,27 @@ function Step2(props) {
           id="duration"
           name="duration"
           type="radio"
-          value="DIY"
+          value={60}
           onChange={props.handleChange}
         />
+        <label htmlFor="Aucun">
+          <span>J'ai moins d'une heure</span>
+        </label>
         <input
           className="form-control"
           id="duration"
           name="duration"
           type="radio"
-          value={this.state.categories}
+          value={1000}
           onChange={props.handleChange}
         />
+        <label htmlFor="Aucun">
+          <span>J'ai tout mon temps</span>
+        </label>
       </div>
-      <button className="btn btn-success btn-block">Sign up</button>
+      <button className="btn btn-success btn-block">
+        Découvrir une activité
+      </button>
     </React.Fragment>
   );
 }
