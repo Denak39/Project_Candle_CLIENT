@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter, Link } from "react-router-dom";
 import UserContext from "../Auth/UserContext";
+import Footer from "../Footer";
 import apiHandler from "../../api/apiHandler";
 
 class MasterForm extends React.Component {
@@ -9,10 +10,12 @@ class MasterForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: "",
       currentStep: 1,
-      categories: "",
+      categories: "DIY",
       duration: "",
       activities: [],
+      filteredActivities: [],
     };
   }
 
@@ -21,21 +24,82 @@ class MasterForm extends React.Component {
     this.setState({
       [name]: value,
     });
+    this.filterAll();
   };
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    apiHandler
-      .getAllActivities()
-      .then((data) => {
-        this.context.setUser(data);
-        this.props.history.push("/");
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  // handleChange(event) {
+  //   const { name, value } = event.target;
+  //   this.setState({ name: event.target.value }, () =>
+  //     console.log("=>", this.state.categories)
+  //   );
+  // }
+
+  // this.setState((prevState, props) => ({
+  //   counter: prevState.counter + props.increment
+  // }));
+
+  // handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   apiHandler
+  //     .getAllActivities()
+  //     .then((data) => {
+  //       this.context.setUser(data);
+  //       this.props.history.push("/");
+  //       console.log(data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // };
+
+  // componentDidMount() {
+  //   apiHandler.getAllActivities().then((data) => {
+  //     console.log("allActivities", data);
+  //     this.setState({ activities: data, filteredActivities: data });
+  //   });
+  // }
+
+  // componentDidMount() {
+  //   apiHandler.getAllActivities().then((data) => {
+  //     var filteredActivities = data.filter((activity) => {
+  //       if (activity.categories === {this.state.categories}) {
+  //         return true;
+  //       } else {
+  //         return false;
+  //       }
+  //     });
+
+  // filterAll() {
+  //   let filterCategories = this.state.activities.filter((activity) =>
+  //     this.state.categories === ""
+  //       ? true
+  //       : this.state.categories === activity.categories
+  //   );
+  //   console.log("filterCategories", filterCategories);
+  //   let filterDuration = filterCategories.filter((activity) =>
+  //     this.state.duration === 2000
+  //       ? true
+  //       : this.state.duration === activity.duration
+  //   );
+  //   return filterDuration;
+  // }
+
+  componentDidMount() {
+    apiHandler.getOneUser().then((data) => {
+      this.setState({ user: data });
+    });
+  }
+
+  filterAll() {
+    console.log("in filterall");
+    console.log(this.state.activities);
+    console.log(this.state.categories);
+    let filterCategories = this.state.activities.filter(
+      (activity) => activity.categories === this.state.categories
+    );
+    console.log("filtered", filterCategories);
+    return filterCategories;
+  }
 
   _next = () => {
     let currentStep = this.state.currentStep;
@@ -83,24 +147,26 @@ class MasterForm extends React.Component {
     return null;
   }
   render() {
+    // console.log(this.filterAll());
+    // console.log("state cat", this.state.categories);
     return (
       <React.Fragment>
         <p>Step {this.state.currentStep} </p>
 
-        <form onSubmit={this.handleSubmit}>
-          <Step1
-            currentStep={this.state.currentStep}
-            handleChange={this.handleChange}
-            categories={this.state.categories}
-          />
-          <Step2
-            currentStep={this.state.currentStep}
-            handleChange={this.handleChange}
-            duration={this.state.duration}
-          />
-          {this.previousButton()}
-          {this.nextButton()}
-        </form>
+        <Step1
+          currentStep={this.state.currentStep}
+          handleChange={this.handleChange}
+          categories={this.state.categories}
+          user={this.state.user.name}
+        />
+        <Step2
+          currentStep={this.state.currentStep}
+          handleChange={this.handleChange}
+          duration={this.state.duration}
+        />
+        {this.previousButton()}
+        {this.nextButton()}
+        <Footer />
       </React.Fragment>
     );
   }
@@ -111,6 +177,10 @@ function Step1(props) {
   }
   return (
     <div className="form-group">
+      <div>
+        <h2>Découvrir</h2>
+        <p>{props.user}, qu'est ce qu'on fait aujourd'hui ?</p>
+      </div>
       <div>
         <input
           className="form-control"
@@ -175,6 +245,10 @@ function Step2(props) {
   console.log("props", props.duration);
   return (
     <React.Fragment>
+      <div>
+        <h2>Découvrir</h2>
+        <p>Combien de temps as-tu devant toi ?</p>
+      </div>
       <div className="form-group">
         <input
           className="form-control"

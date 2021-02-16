@@ -1,6 +1,7 @@
 import React from "react";
 import UserContext from "../components/Auth/UserContext";
 import apiHandler from "../api/apiHandler";
+import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 
 class Activities extends React.Component {
@@ -46,6 +47,7 @@ class Activities extends React.Component {
             </div>
           );
         })}
+        <Footer />
       </div>
     );
   }
