@@ -17,7 +17,13 @@ class MasterForm extends React.Component {
       profileImage: "",
       interest: [],
       animals: [],
+      activities: [],
     };
+  }
+  componentDidMount() {
+    apiHandler.getAllActivities().then((data) => {
+      this.setState({ activities: data });
+    });
   }
   handleChange = (event) => {
     const { name, value } = event.target;
@@ -63,15 +69,6 @@ class MasterForm extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    // const {
-    //   email,
-    //   name,
-    //   password,
-    //   genre,
-    //   profileImage,
-    //   interest,
-    //   animals,
-    // } = this.state;
     apiHandler
       .signup(this.state)
       .then((data) => {
@@ -156,6 +153,7 @@ class MasterForm extends React.Component {
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
             interests={this.state.interest}
+            activities={this.state.activities}
             handleClick2={this.handleClick2}
           />
           <Step6
@@ -316,154 +314,37 @@ function Step4(props) {
     </React.Fragment>
   );
 }
+
 function Step5(props) {
   if (props.currentStep !== 5) {
     return null;
   }
+  if (!props.activities) {
+    return <div>NO subcategories...</div>;
+  }
+  const subArray = [...new Set(props.activities.map((el) => el.subcategories))];
+  console.log(subArray);
 
   return (
     <div className="form-group">
-      <label htmlFor="interest" hidden></label>
-      <div>
-        <input
-          className="form-control"
-          id="interest"
-          name="interest"
-          type="checkbox"
-          placeholder="Décoration"
-          value="Décoration"
-          onChange={props.handleClick2}
-        />
-        <label htmlFor="Décoration">
-          <span>Décoration</span>
-        </label>
-      </div>
-      <div>
-        <input
-          className="form-control"
-          id="interest"
-          name="interest"
-          type="checkbox"
-          placeholder="Art du papier"
-          value="Art du papier"
-          onChange={props.handleClick2}
-        />
-        <label htmlFor="Art du papier">
-          <span>Art du papier</span>
-        </label>
-      </div>
-      <div>
-        <input
-          className="form-control"
-          id="interest"
-          name="interest"
-          type="checkbox"
-          placeholder="Bricolage"
-          value="Bricolage"
-          onChange={props.handleClick2}
-        />
-        <label htmlFor="Bricolage">
-          <span>Bricolage</span>
-        </label>
-      </div>
-      <div>
-        <input
-          className="form-control"
-          id="interest"
-          name="interest"
-          type="checkbox"
-          placeholder="Peinture"
-          value="Peinture"
-          onChange={props.handleClick2}
-        />
-        <label htmlFor="Peinture">
-          <span>Peinture</span>
-        </label>
-      </div>
-      <div>
-        <input
-          className="form-control"
-          id="interest"
-          name="interest"
-          type="checkbox"
-          placeholder="Petits plaisirs"
-          value="Petits plaisirs"
-          onChange={props.handleClick2}
-        />
-        <label htmlFor="Petits plaisirs">
-          <span>Petits plaisirs</span>
-        </label>
-      </div>
-      <div>
-        <input
-          className="form-control"
-          id="interest"
-          name="interest"
-          type="checkbox"
-          placeholder="Activité en plein air"
-          value="Activité en plein air"
-          onChange={props.handleClick2}
-        />
-        <label htmlFor="Activité en plein air">
-          <span>Activité en plein air</span>
-        </label>
-      </div>
-      <div>
-        <input
-          className="form-control"
-          id="interest"
-          name="interest"
-          type="checkbox"
-          placeholder="Mercerie"
-          value="Mercerie"
-          onChange={props.handleClick2}
-        />
-        <label htmlFor="Mercerie">
-          <span>Mercerie</span>
-        </label>
-      </div>
-      <div>
-        <input
-          className="form-control"
-          id="interest"
-          name="interest"
-          type="checkbox"
-          placeholder="Jardinage"
-          value="Jardinage"
-          onChange={props.handleClick2}
-        />
-        <label htmlFor="Jardinage">
-          <span>Jardinage</span>
-        </label>
-      </div>
-      <div>
-        <input
-          className="form-control"
-          id="interest"
-          name="interest"
-          type="checkbox"
-          placeholder="Modelage"
-          value="Modelage"
-          onChange={props.handleClick2}
-        />
-        <label htmlFor="Modelage">
-          <span>Modelage</span>
-        </label>
-      </div>
-      <div>
-        <input
-          className="form-control"
-          id="interest"
-          name="interest"
-          type="checkbox"
-          placeholder="Activité de groupe"
-          value="Activité de groupe"
-          onChange={props.handleClick2}
-        />
-        <label htmlFor="Activité de groupe">
-          <span>Activité de groupe</span>
-        </label>
-      </div>
+      {subArray.map((value, index) => {
+        return (
+          <div key={index}>
+            <input
+              className="form-control"
+              id="interest"
+              name="interest"
+              type="checkbox"
+              placeholder={value}
+              value={value}
+              onChange={props.handleClick2}
+            />
+            <label htmlFor={value}>
+              <span>{value}</span>
+            </label>
+          </div>
+        );
+      })}
     </div>
   );
 }
@@ -471,67 +352,29 @@ function Step6(props) {
   if (props.currentStep !== 6) {
     return null;
   }
+  const animalArray = ["Chat", "Chien", "Chat et Chien", "Aucun"];
   return (
     <React.Fragment>
       <div className="form-group">
         <label htmlFor="animals" hidden></label>
-        <div>
-          <input
-            className="form-control"
-            id="animals"
-            name="animals"
-            type="radio"
-            placeholder="Chat"
-            value="Chat"
-            onChange={props.handleChange}
-          />
-          <label htmlFor="Chat">
-            <span>Chat</span>
-          </label>
-        </div>
-        <div>
-          <input
-            className="form-control"
-            id="animals"
-            name="animals"
-            type="radio"
-            placeholder="Chien"
-            value="Chien"
-            onChange={props.handleChange}
-          />
-          <label htmlFor="Chien">
-            <span>Chien</span>
-          </label>
-        </div>
-        <div>
-          <input
-            className="form-control"
-            id="animals"
-            name="animals"
-            type="radio"
-            placeholder="Les 2"
-            value="Chat et Chien"
-            onChange={props.handleChange}
-          />
-          <label htmlFor="Rongeur">
-            <span>Chat et Chien</span>
-          </label>
-        </div>
-
-        <div>
-          <input
-            className="form-control"
-            id="animals"
-            name="animals"
-            type="radio"
-            placeholder="Aucun"
-            value="Aucun"
-            onChange={props.handleChange}
-          />
-          <label htmlFor="Aucun">
-            <span>Aucun</span>
-          </label>
-        </div>
+        {animalArray.map((value, index) => {
+          return (
+            <div key={index}>
+              <input
+                className="form-control"
+                id="animals"
+                name="animals"
+                type="radio"
+                placeholder={value}
+                value={value}
+                onChange={props.handleChange}
+              />
+              <label htmlFor={value}>
+                <span>{value}</span>
+              </label>
+            </div>
+          );
+        })}
       </div>
 
       <button className="btn btn-success btn-block">Sign up</button>

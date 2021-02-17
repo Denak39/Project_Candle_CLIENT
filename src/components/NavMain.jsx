@@ -36,7 +36,9 @@ const NavMain = (props) => {
                 </NavLink>
               </li>
               <li>
+                {/* <NavLink to="/signin"> */}
                 <p onClick={handleLogout}>Logout</p>
+                {/* </NavLink> */}
               </li>
               <li>
                 <h3 className="logo">Search</h3>
@@ -64,7 +66,6 @@ const NavMain = (props) => {
         <h1>Bonjour {context.user && context.user.name} !</h1>
       </div>
       <Mood />
-
     </div>
   );
 };

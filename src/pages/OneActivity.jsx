@@ -19,7 +19,6 @@ class OneActivity extends React.Component {
       .updateUser(this.state)
       .then((data) => {
         this.context.setUser(data);
-        // this.props.history.push("");
       })
       .catch((error) => {
         console.log(error);
