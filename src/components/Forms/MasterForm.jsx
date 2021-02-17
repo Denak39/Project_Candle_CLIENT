@@ -18,6 +18,9 @@ class MasterForm extends React.Component {
       interest: [],
       animals: [],
       activities: [],
+      disabled: true,
+      habits: [],
+      needs: [],
     };
   }
   componentDidMount() {
@@ -30,27 +33,42 @@ class MasterForm extends React.Component {
     this.setState({
       [name]: value,
     });
-    console.log(this.state.genre);
+    this.setState({
+      disabled: false,
+    });
+    console.log(this.state.disabled);
   };
 
   handleClick = (event) => {
     const { name, value } = event.target;
     const animalsCopy = [...this.state.animals];
-    // const animalsIndex = animalsCopy.findIndex((animal) => animal === value);
-
-    // if (event.target.checked === true) {
     animalsCopy.push(value);
-    // } else {
-    //   animalsCopy.splice(animalsIndex, 1);
-    // }
     this.setState({
       [name]: animalsCopy,
     });
-    // if (event.target.value === "Aucun" && event.target.checked === true) {
-    //   this.setState({ checked: false, animals: ["Aucun"] });
-    // }
   };
-
+  handleClick3 = (event) => {
+    const { name, value } = event.target;
+    const animalsCopy = [...this.state.habits];
+    animalsCopy.push(value);
+    this.setState({
+      [name]: animalsCopy,
+    });
+    this.setState({
+      disabled: false,
+    });
+  };
+  handleClick4 = (event) => {
+    const { name, value } = event.target;
+    const animalsCopy = [...this.state.needs];
+    animalsCopy.push(value);
+    this.setState({
+      [name]: animalsCopy,
+    });
+    this.setState({
+      disabled: false,
+    });
+  };
   handleClick2 = (event) => {
     const { name, value } = event.target;
     const interestCopy = [...this.state.interest];
@@ -64,6 +82,9 @@ class MasterForm extends React.Component {
     }
     this.setState({
       [name]: interestCopy,
+    });
+    this.setState({
+      disabled: false,
     });
   };
 
@@ -85,8 +106,10 @@ class MasterForm extends React.Component {
     currentStep = currentStep >= 5 ? 6 : currentStep + 1;
     this.setState({
       currentStep: currentStep,
+      disabled: true,
     });
   };
+
   _prev = () => {
     let currentStep = this.state.currentStep;
     currentStep = currentStep <= 1 ? 1 : currentStep - 1;
@@ -118,23 +141,42 @@ class MasterForm extends React.Component {
           className="btn btn-primary float-right"
           type="button"
           onClick={this._next}
+          disabled={this.state.disabled}
         >
-          Next
+          Suivant
         </button>
       );
     }
     return null;
   }
+
   render() {
+    const progressArray = ["0", "1", "2", "3", "4", "5"];
     return (
       <React.Fragment>
-        <h1>React Wizard Form</h1>
+        <div id="form-header">
+          {this.previousButton()}
+          <h1>Avant de débuter</h1>
+        </div>
         <p>Step {this.state.currentStep} </p>
-
+        <div id="progress-bar">
+          {progressArray.map((index, value) => {
+            return (
+              <div
+                id="progress-bar-step"
+                key={index}
+                style={{
+                  color: index < this.state.currentStep ? "#F2CE70" : "white",
+                  backgroundColor:
+                    index < this.state.currentStep ? "#F2CE70" : "white",
+                }}
+              >
+                {index}
+              </div>
+            );
+          })}
+        </div>
         <form onSubmit={this.handleSubmit}>
-          {/* 
-        render the form steps and pass required props in
-      */}
           <Step1
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
@@ -147,8 +189,17 @@ class MasterForm extends React.Component {
             handleChange={this.handleChange}
             name={this.state.name}
           />
-          <Step3 currentStep={this.state.currentStep} />
-          <Step4 currentStep={this.state.currentStep} />
+          <Step3
+            currentStep={this.state.currentStep}
+            name={this.state.name}
+            habits={this.state.habits}
+            handleClick3={this.handleClick3}
+          />
+          <Step4
+            currentStep={this.state.currentStep}
+            needs={this.state.needs}
+            handleClick4={this.handleClick4}
+          />
           <Step5
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
@@ -161,8 +212,9 @@ class MasterForm extends React.Component {
             handleChange={this.handleChange}
             animals={this.state.animals}
             handleClick={this.handleClick}
+            disabled={this.state.disabled}
           />
-          {this.previousButton()}
+
           {this.nextButton()}
         </form>
       </React.Fragment>
@@ -173,8 +225,10 @@ function Step1(props) {
   if (props.currentStep !== 1) {
     return null;
   }
+
   return (
     <div className="form-group">
+      <h2>Inscription</h2>
       <label htmlFor="email">Email address</label>
       <input
         className="form-control"
@@ -184,7 +238,9 @@ function Step1(props) {
         placeholder="Enter email"
         value={props.email}
         onChange={props.handleChange}
+        required
       />
+
       <label htmlFor="password">Password</label>
       <input
         className="form-control"
@@ -194,9 +250,12 @@ function Step1(props) {
         placeholder="Enter password"
         value={props.password}
         onChange={props.handleChange}
+        required
       />
       <div>
-        <label htmlFor="genre">Genre</label>
+        <label required htmlFor="genre">
+          Genre
+        </label>
         <input
           className="form-control"
           id="genre"
@@ -214,25 +273,6 @@ function Step1(props) {
           onChange={props.handleChange}
         />
       </div>
-      {/* <div className="pic-upload form-div">
-        <div>
-          <label htmlFor="profileImage" className="profileImg-label label-file">
-            Avatar:
-          </label>
-        </div>
-        <br />
-        <div className="choose-file">
-          <input
-            onChange={props.handleChange}
-            value="profileImage"
-            type="file"
-            name="profileImage"
-            id="image"
-            alt="profileImage"
-            className="signup-profileImg input-file"
-          />
-        </div>
-      </div> */}
     </div>
   );
 }
@@ -243,6 +283,7 @@ function Step2(props) {
   }
   return (
     <div className="form-group">
+      <h2>Comment vous appelez-vous ?</h2>
       <label htmlFor="name">name</label>
       <input
         className="form-control"
@@ -252,6 +293,7 @@ function Step2(props) {
         placeholder="Enter name"
         value={props.name}
         onChange={props.handleChange}
+        required
       />
     </div>
   );
@@ -264,27 +306,80 @@ function Step3(props) {
   return (
     <React.Fragment>
       <div className="form-group">
-        <label>Faisons connaissance ! </label>
+        <h2>Faisons connaissance {props.name} ! </h2>
         <p>Qu'est-ce qui vous détend d'habitude ?</p>
         <input
           className="form-control"
-          type="button"
-          value="Je contacte mes proches pour discuter"
+          id="habits"
+          name="habits"
+          type="checkbox"
+          placeholder="Je contacte mes proches pour discuter"
+          value="détente"
+          onChange={props.handleClick3}
         />
+        <label>
+          <span>Je contacte mes proches pour discuter</span>
+        </label>
         <input
-          type="button"
-          value="Je pratique des activités manuelles"
-        ></input>
+          className="form-control"
+          id="habits"
+          name="habits"
+          type="checkbox"
+          placeholder="Je pratique des activités manuelles"
+          value="manu"
+          onChange={props.handleClick3}
+        />
+        <label>
+          <span>Je pratique des activités manuelles</span>
+        </label>
         <input
-          type="button"
-          value="Je lis, j'écoute de la musique, je joue..."
-        ></input>
-        <input type="button" value="Je profite du plein air"></input>
+          className="form-control"
+          id="habits"
+          name="habits"
+          type="checkbox"
+          placeholder="Je lis, j'écoute de la musique, je joue..."
+          value="musique"
+          onChange={props.handleClick3}
+        />
+        <label>
+          <span>Je lis, j'écoute de la musique, je joue...</span>
+        </label>
         <input
-          type="button"
-          value="Je fais du yoga ou de la méditation"
-        ></input>
-        <input type="button" value="Je me créé une ambiance cocooning"></input>
+          className="form-control"
+          id="habits"
+          name="habits"
+          type="checkbox"
+          placeholder="Je profite du plein air"
+          value="sortie"
+          onChange={props.handleClick3}
+        />
+        <label>
+          <span>Je profite du plein air</span>
+        </label>
+        <input
+          className="form-control"
+          id="habits"
+          name="habits"
+          type="checkbox"
+          placeholder="Je fais du yoga ou de la méditation"
+          value="yoga"
+          onChange={props.handleClick3}
+        />
+        <label>
+          <span>Je fais du yoga ou de la méditation</span>
+        </label>
+        <input
+          className="form-control"
+          id="habits"
+          name="habits"
+          type="checkbox"
+          placeholder="Je me créé une ambiance cocooning"
+          value="cocon"
+          onChange={props.handleClick3}
+        />
+        <label>
+          <span>Je me créé une ambiance cocooning</span>
+        </label>
       </div>
     </React.Fragment>
   );
@@ -297,19 +392,71 @@ function Step4(props) {
   return (
     <React.Fragment>
       <div className="form-group">
-        <label>Super !</label>
+        <h2>Super !</h2>
         <p>
           Maintenant nous aimerions comprendre vos besoins, pourquoi
           souhaitez-vous créer de nouvelles habitudes de relaxation ?
         </p>
-        <input className="form-control" type="button" value="Moins stresser" />
-        <input type="button" value="Me changer les idées"></input>
         <input
-          type="button"
+          className="form-control"
+          id="needs"
+          name="needs"
+          type="checkbox"
+          placeholder="Moins stresser"
+          value="Stress"
+          onChange={props.handleClick4}
+        />
+        <label>
+          <span>Moins stresser</span>
+        </label>
+        <input
+          className="form-control"
+          id="needs"
+          name="needs"
+          type="checkbox"
+          placeholder="Me changer les idées"
+          value="Me changer les idées"
+          onChange={props.handleClick4}
+        />
+        <label>
+          <span>Me changer les idées</span>
+        </label>
+        <input
+          className="form-control"
+          id="needs"
+          name="needs"
+          type="checkbox"
+          placeholder="Partager des intérêts avec mes proches"
           value="Partager des intérêts avec mes proches"
-        ></input>
-        <input type="button" value="M'inspirer"></input>
-        <input type="button" value="Mieux occuper mon temps libre"></input>
+          onChange={props.handleClick4}
+        />
+        <label>
+          <span>Partager des intérêts avec mes proches</span>
+        </label>
+        <input
+          className="form-control"
+          id="needs"
+          name="needs"
+          type="checkbox"
+          placeholder="M'inspirer"
+          value="M'inspirer"
+          onChange={props.handleClick4}
+        />
+        <label>
+          <span>M'inspirer</span>
+        </label>
+        <input
+          className="form-control"
+          id="needs"
+          name="needs"
+          type="checkbox"
+          placeholder="Mieux occuper mon temps libre"
+          value="Mieux occuper mon temps libre"
+          onChange={props.handleClick4}
+        />
+        <label>
+          <span>Mieux occuper mon temps libre</span>
+        </label>
       </div>
     </React.Fragment>
   );
@@ -322,11 +469,24 @@ function Step5(props) {
   if (!props.activities) {
     return <div>NO subcategories...</div>;
   }
-  const subArray = [...new Set(props.activities.map((el) => el.subcategories))];
+
+  const subArray = [
+    ...new Set(props.activities.map((el) => el.subcategories).sort()),
+  ];
   console.log(subArray);
+
+  const imageArray = [
+    "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1952&q=80",
+    "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80",
+  ];
 
   return (
     <div className="form-group">
+      <h2>C'est compris !</h2>
+      <p>
+        Pour vous proposer des contenus de relaxation qui vous correspondent,
+        choisissez les activités qui vous intéressent :{" "}
+      </p>
       {subArray.map((value, index) => {
         return (
           <div key={index}>
@@ -339,6 +499,7 @@ function Step5(props) {
               value={value}
               onChange={props.handleClick2}
             />
+            {<img src={imageArray[index]} alt=""></img>}
             <label htmlFor={value}>
               <span>{value}</span>
             </label>
@@ -356,7 +517,11 @@ function Step6(props) {
   return (
     <React.Fragment>
       <div className="form-group">
-        <label htmlFor="animals" hidden></label>
+        <h2>C'est bientôt fini !</h2>
+        <p>
+          Pour finir, avez-vous des animaux de compagnie figurant dans cette
+          liste ?{" "}
+        </p>
         {animalArray.map((value, index) => {
           return (
             <div key={index}>
@@ -377,7 +542,9 @@ function Step6(props) {
         })}
       </div>
 
-      <button className="btn btn-success btn-block">Sign up</button>
+      <button className="btn btn-success btn-block" disabled={props.disabled}>
+        Sign up
+      </button>
     </React.Fragment>
   );
 }
