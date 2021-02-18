@@ -3,6 +3,7 @@ import UserContext from "../components/Auth/UserContext";
 import apiHandler from "../api/apiHandler";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import NavMain from "../components/NavMain";
 
 class Activities extends React.Component {
   static contextType = UserContext;
@@ -19,9 +20,8 @@ class Activities extends React.Component {
           return false;
         }
       });
-
       this.setState({ activities: filteredActivities });
-      console.log(this.state.activities);
+      console.log(this.state.activities[0].subcategories);
     });
   }
   // get the category from the path
@@ -30,6 +30,8 @@ class Activities extends React.Component {
   render() {
     return (
       <div>
+        <NavMain />
+        <div id="filter-bar"></div>
         {this.state.activities.map((activity) => {
           return (
             <div className="activities" key={activity._id}>
