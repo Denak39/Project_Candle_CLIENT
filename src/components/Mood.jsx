@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import apiHandler from "../api/apiHandler";
 
 // import PopUp from "../components/PopUp";
-const today = dayjs();
+const today = dayjs().format("YYYY-MM-DD");
 
 function Mood() {
   const [mood, setMood] = React.useState([]);

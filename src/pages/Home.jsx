@@ -66,14 +66,10 @@ class Home extends React.Component {
     }
 
     const interest = this.state.user.interest;
-    const reco = this.state.allActivities.filter((activity) =>
-      interest.includes(activity.subcategories)
-    );
+    const reco = this.state.allActivities
+      .filter((activity) => interest.includes(activity.subcategories))
+      .splice(0, 10);
 
-    // function getCount(str) {
-    //   let vowels = ["a", "e", "i", "o", "u"];
-    //   return str.split("").filter((el) => vowels.includes(el)).length;
-    // }
     return (
       <div>
         <NavMain />

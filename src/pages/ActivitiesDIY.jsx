@@ -9,7 +9,12 @@ class Activities extends React.Component {
   static contextType = UserContext;
   state = {
     activities: [],
+    filter: "Tout",
   };
+
+  handlefilter(option) {
+    this.setState({ filter: option });
+  }
 
   componentDidMount() {
     apiHandler.getAllActivities().then((data) => {
@@ -28,27 +33,66 @@ class Activities extends React.Component {
   // filter by category
   // display the lessons
   render() {
+    const filterOptions = [
+      "Tout",
+      ...this.state.activities.map((activity) => activity.subcategories),
+    ];
     return (
       <div>
         <NavMain />
-        <div id="filter-bar"></div>
-        {this.state.activities.map((activity) => {
-          return (
-            <div className="activities" key={activity._id}>
-              <Link to={`/activities/${activity._id}`}>
-                <div className="activities-image">
-                  <img src={activity.image} alt={activity.title} />
+        <h1>Do It Yourself</h1>
+        <div id="filter-bar">
+          {filterOptions.map((option, index) => {
+            return (
+              <div key={index}>
+                <button
+                  onClick={() => this.handlefilter(option)}
+                  value={option}
+                >
+                  {option}
+                </button>
+              </div>
+            );
+          })}
+        </div>
+        {this.state.filter === "Tout" &&
+          this.state.activities.map((activity) => {
+            return (
+              <div className="activities" key={activity._id}>
+                <Link to={`/activities/${activity._id}`}>
+                  <div className="activities-image">
+                    <img src={activity.image} alt={activity.title} />
+                  </div>
+                  <div className="activities-content">
+                    <h1>{activity.title}</h1>
+                    <h2>{activity.subcategories}</h2>
+                    <p>{activity.duration} min</p>
+                    <p>{activity.difficulty}</p>
+                  </div>
+                </Link>
+              </div>
+            );
+          })}
+        {this.state.filter !== "Tout" &&
+          this.state.activities
+            .filter((activity) => activity.subcategories === this.state.filter)
+            .map((activity) => {
+              return (
+                <div className="activities" key={activity._id}>
+                  <Link to={`/activities/${activity._id}`}>
+                    <div className="activities-image">
+                      <img src={activity.image} alt={activity.title} />
+                    </div>
+                    <div className="activities-content">
+                      <h1>{activity.title}</h1>
+                      <h2>{activity.subcategories}</h2>
+                      <p>{activity.duration} min</p>
+                      <p>{activity.difficulty}</p>
+                    </div>
+                  </Link>
                 </div>
-                <div className="activities-content">
-                  <h1>{activity.title}</h1>
-                  <h2>{activity.subcategories}</h2>
-                  <p>{activity.duration} min</p>
-                  <p>{activity.difficulty}</p>
-                </div>
-              </Link>
-            </div>
-          );
-        })}
+              );
+            })}
         <Footer />
       </div>
     );
