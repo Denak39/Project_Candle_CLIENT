@@ -1,5 +1,5 @@
 import React from "react";
-import { withRouter, Link } from "react-router-dom";
+import { withRouter, Link, Redirect } from "react-router-dom";
 import UserContext from "../Auth/UserContext";
 import Footer from "../Footer";
 import apiHandler from "../../api/apiHandler";
@@ -24,81 +24,36 @@ class MasterForm extends React.Component {
     this.setState({
       [name]: value,
     });
-    this.filterAll();
   };
-
-  // handleChange(event) {
-  //   const { name, value } = event.target;
-  //   this.setState({ name: event.target.value }, () =>
-  //     console.log("=>", this.state.categories)
-  //   );
-  // }
-
-  // this.setState((prevState, props) => ({
-  //   counter: prevState.counter + props.increment
-  // }));
-
-  // handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   apiHandler
-  //     .getAllActivities()
-  //     .then((data) => {
-  //       this.context.setUser(data);
-  //       this.props.history.push("/");
-  //       console.log(data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // };
-
-  // componentDidMount() {
-  //   apiHandler.getAllActivities().then((data) => {
-  //     console.log("allActivities", data);
-  //     this.setState({ activities: data, filteredActivities: data });
-  //   });
-  // }
-
-  // componentDidMount() {
-  //   apiHandler.getAllActivities().then((data) => {
-  //     var filteredActivities = data.filter((activity) => {
-  //       if (activity.categories === {this.state.categories}) {
-  //         return true;
-  //       } else {
-  //         return false;
-  //       }
-  //     });
-
-  // filterAll() {
-  //   let filterCategories = this.state.activities.filter((activity) =>
-  //     this.state.categories === ""
-  //       ? true
-  //       : this.state.categories === activity.categories
-  //   );
-  //   console.log("filterCategories", filterCategories);
-  //   let filterDuration = filterCategories.filter((activity) =>
-  //     this.state.duration === 2000
-  //       ? true
-  //       : this.state.duration === activity.duration
-  //   );
-  //   return filterDuration;
-  // }
 
   componentDidMount() {
     apiHandler.getOneUser().then((data) => {
       this.setState({ user: data });
     });
+    apiHandler
+      .getAllActivities()
+      .then((data) => {
+        this.setState({ activities: data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   filterAll() {
-    console.log("in filterall");
     console.log(this.state.activities);
     console.log(this.state.categories);
-    let filterCategories = this.state.activities.filter(
-      (activity) => activity.categories === this.state.categories
-    );
+    let filterCategories = this.state.activities
+      .filter((activity) => activity.categories === this.state.categories)
+      .filter((activity) => Number(activity.duration) < this.state.duration);
     console.log("filtered", filterCategories);
-    return filterCategories;
+    const activityRandom = filterCategories.map((activity) => activity._id)[
+      Math.floor(
+        filterCategories.map((activity) => activity._id).length * Math.random()
+      )
+    ];
+    console.log(activityRandom);
+    return activityRandom;
   }
 
   _next = () => {
@@ -147,8 +102,6 @@ class MasterForm extends React.Component {
     return null;
   }
   render() {
-    // console.log(this.filterAll());
-    // console.log("state cat", this.state.categories);
     return (
       <React.Fragment>
         <p>Step {this.state.currentStep} </p>
@@ -163,6 +116,7 @@ class MasterForm extends React.Component {
           currentStep={this.state.currentStep}
           handleChange={this.handleChange}
           duration={this.state.duration}
+          handleFilter={this.filterAll()}
         />
         {this.previousButton()}
         {this.nextButton()}
@@ -273,9 +227,11 @@ function Step2(props) {
           <span>J'ai tout mon temps</span>
         </label>
       </div>
-      <button className="btn btn-success btn-block">
-        Découvrir une activité
-      </button>
+      <Link to={`/activities/${props.handleFilter}`}>
+        <button className="btn btn-success btn-block">
+          Découvrir une activité
+        </button>
+      </Link>
     </React.Fragment>
   );
 }

@@ -35,7 +35,9 @@ class Activities extends React.Component {
   render() {
     const filterOptions = [
       "Tout",
-      ...this.state.activities.map((activity) => activity.subcategories),
+      ...new Set(
+        this.state.activities.map((activity) => activity.subcategories)
+      ),
     ];
     return (
       <div>

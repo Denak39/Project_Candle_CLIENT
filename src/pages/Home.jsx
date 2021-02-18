@@ -22,6 +22,42 @@ class Home extends React.Component {
     });
   }
 
+  categories(interest) {
+    const PleinAir = [
+      "Jardinage",
+      "Bricolage",
+      "Marche",
+      "Activité de groupe",
+      "Chat",
+      "Chien",
+    ];
+    const DIY = [
+      "Mercerie",
+      "Dessin",
+      "Bricolage",
+      "Peinture",
+      "Art du papier",
+      "Modelage",
+      "Décoration",
+      "Chat",
+      "Chien",
+    ];
+    const Cosy = [
+      "Petits plaisirs",
+      "Confort",
+      "Ambiance",
+      "Ecriture",
+      "Organisation",
+    ];
+    if (Cosy.includes(interest)) {
+      return "Cosy";
+    } else if (DIY.includes(interest)) {
+      return "DIY";
+    } else {
+      return "Plein Air";
+    }
+  }
+
   message(value) {
     if (value === "Jardinage") {
       return "Retour à l'essentiel avec des activités de jardinage en pleine terre et en appartement pour garder la main verte";
@@ -64,12 +100,18 @@ class Home extends React.Component {
     if (!this.state.user) {
       return <div>User is loading...</div>;
     }
+    console.log(this.categories("Peinture"));
 
     const interest = this.state.user.interest;
     const reco = this.state.allActivities
       .filter((activity) => interest.includes(activity.subcategories))
       .splice(0, 10);
-
+    const userActivitiesId = this.state.user.userActivities.map(
+      (activity) => activity._id
+    );
+    const userActivityDisplay = this.state.allActivities.filter((activity) =>
+      userActivitiesId.includes(activity._id)
+    );
     return (
       <div>
         <NavMain />
@@ -85,14 +127,35 @@ class Home extends React.Component {
           <div>
             {reco.map((value, index) => {
               return (
-                <div key={index}>
-                  <img src={value.image} alt={value.image} />
-                  <h1>{value.title}</h1>
-                  <p>
-                    {value.subcategories}
-                    {value.duration}
-                  </p>
-                </div>
+                <Link to={`/activities/${value._id}`}>
+                  <div key={value._id}>
+                    <img src={value.image} alt={value.image} />
+                    <h1>{value.title}</h1>
+                    <p>
+                      {value.subcategories}
+                      {value.duration}
+                    </p>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+        <div>
+          <h2>Voici vos dernières activités</h2>
+          <div>
+            {userActivityDisplay.map((activity) => {
+              return (
+                <Link to={`/activities/${activity._id}`}>
+                  <div key={activity._id}>
+                    <img src={activity.image} alt={activity.image} />
+                    <h1>{activity.title}</h1>
+                    <p>
+                      {activity.subcategories}
+                      {activity.duration}
+                    </p>
+                  </div>
+                </Link>
               );
             })}
           </div>
@@ -103,11 +166,13 @@ class Home extends React.Component {
             <ul>
               {interest.map((value, index) => {
                 return (
-                  <li key={index}>
-                    <h1>{value}</h1>
-                    <p>{this.message(value)}</p>
-                    {/* <img src="" alt={value} /> */}
-                  </li>
+                  <Link to={`/activities/${this.categories(value)}`}>
+                    <li key={index}>
+                      <h1>{value}</h1>
+                      <p>{this.message(value)}</p>
+                      {/* <img src="" alt={value} /> */}
+                    </li>
+                  </Link>
                 );
               })}
             </ul>

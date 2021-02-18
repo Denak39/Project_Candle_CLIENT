@@ -27,10 +27,8 @@ const NavMain = (props) => {
     context.user.mood
       .map((mood) => mood.date.slice(0, 10))
       .includes(dayjs().format("YYYY-MM-DD"));
-  console.log("const", dateMood);
 
   const today = dayjs().format("YYYY-MM-DD");
-  console.log("today", today);
 
   return (
     <div>
