@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { withUser } from "../components/Auth/withUser";
 import apiHandler from "../api/apiHandler";
 import Mood from "../components/Mood";
@@ -10,6 +10,9 @@ import UserContext from "./Auth/UserContext";
 
 const NavMain = (props) => {
   const { context } = props;
+  let history = useHistory();
+  console.log("histo", history);
+  console.log("splice", history.location.pathname.slice(0, -25));
 
   function handleLogout() {
     apiHandler
@@ -33,9 +36,15 @@ const NavMain = (props) => {
   return (
     <div>
       <nav className="NavMain">
-        <NavLink exact to="/profile">
-          <h3 className="logo">Profile</h3>
-        </NavLink>
+        {history.location.pathname.slice(0, -25) === "/activities" && (
+          <button onClick={() => history.goBack()}>Précédent</button>
+        )}
+        {history.location.pathname.slice(0, -25) !== "/activities" && (
+          <NavLink exact to="/profile">
+            <h3 className="logo">Profile</h3>
+          </NavLink>
+        )}
+
         <ul className="nav-list">
           {context.isLoggedIn && (
             <React.Fragment>

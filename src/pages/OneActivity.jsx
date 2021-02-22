@@ -1,7 +1,7 @@
 import React from "react";
 import UserContext from "../components/Auth/UserContext";
 import apiHandler from "../api/apiHandler";
-import NavMain2 from "../components/NavMain2";
+import NavMain from "../components/NavMain";
 import { Link } from "react-router-dom";
 
 class OneActivity extends React.Component {
@@ -41,7 +41,7 @@ class OneActivity extends React.Component {
     return (
       this.state.activity && (
         <div>
-          <NavMain2 />
+          <NavMain />
           <div>
             <h1>{this.state.activity.title}</h1>
             <div>
