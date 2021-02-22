@@ -1,8 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { withUser } from "../components/Auth/withUser";
+import { withUser } from "./Auth/withUser";
 import apiHandler from "../api/apiHandler";
-import Mood from "../components/Mood";
+import Mood from "./Mood";
 import dayjs from "dayjs";
 
 import "../styles/NavMain.css";
@@ -28,22 +28,30 @@ const NavMain = (props) => {
       .map((mood) => mood.date.slice(0, 10))
       .includes(dayjs().format("YYYY-MM-DD"));
 
-  const today = dayjs().format("YYYY-MM-DD");
-
   return (
     <div>
       <nav className="NavMain">
-        <NavLink exact to="/profile">
-          <h3 className="logo">Profile</h3>
+        <NavLink exact to="/activities">
+          <h3 className="logo">Previous</h3>
         </NavLink>
         <ul className="nav-list">
           {context.isLoggedIn && (
             <React.Fragment>
-              <li>
-                <NavLink to="/profile">
-                  {context.user && context.user.email}
-                </NavLink>
-              </li>
+              {props.path === "/activities" && (
+                <li>
+                  <p>pré</p>
+                  {/* <NavLink to="/profile">
+                    {context.user && context.user.email}
+                  </NavLink> */}
+                </li>
+              )}
+              {props.path !== "/activities" && (
+                <li>
+                  <NavLink to="/profile">
+                    {context.user && context.user.email}
+                  </NavLink>
+                </li>
+              )}
 
               <li>
                 {/* <NavLink to="/signin"> */}

@@ -1,6 +1,7 @@
 import React from "react";
 import UserContext from "../components/Auth/UserContext";
 import apiHandler from "../api/apiHandler";
+import NavMain2 from "../components/NavMain2";
 import { Link } from "react-router-dom";
 
 class OneActivity extends React.Component {
@@ -40,29 +41,32 @@ class OneActivity extends React.Component {
     return (
       this.state.activity && (
         <div>
-          <h1>{this.state.activity.title}</h1>
+          <NavMain2 />
           <div>
-            <h3>{this.state.activity.subcategories}</h3>
-            <h3>{this.state.activity.duration}</h3>
-            <h3>{this.state.activity.difficulty}</h3>
+            <h1>{this.state.activity.title}</h1>
+            <div>
+              <h3>{this.state.activity.subcategories}</h3>
+              <h3>{this.state.activity.duration}</h3>
+              <h3>{this.state.activity.difficulty}</h3>
+            </div>
+            <p>{this.state.activity.description}</p>
+            <div>
+              <h2>Les grandes étapes (images)</h2>
+            </div>
+            <h2>Le matériel nécessaire</h2>
+            <div>
+              <ul>
+                {materials.map((value, index) => {
+                  return <li key={index}>{value}</li>;
+                })}
+              </ul>
+            </div>
+            <Link to={`/activities/${this.state.activity._id}/steps`}>
+              <button type="button" onClick={this.handleSubmit}>
+                Je tente !
+              </button>{" "}
+            </Link>
           </div>
-          <p>{this.state.activity.description}</p>
-          <div>
-            <h2>Les grandes étapes (images)</h2>
-          </div>
-          <h2>Le matériel nécessaire</h2>
-          <div>
-            <ul>
-              {materials.map((value, index) => {
-                return <li key={index}>{value}</li>;
-              })}
-            </ul>
-          </div>
-          <Link to={`/activities/${this.state.activity._id}/steps`}>
-            <button type="button" onClick={this.handleSubmit}>
-              Je tente !
-            </button>{" "}
-          </Link>
         </div>
       )
     );

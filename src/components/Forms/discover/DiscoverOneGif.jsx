@@ -23,6 +23,7 @@ class DiscoverOneGif extends React.Component {
         console.log(error);
       });
   }
+
   render() {
     if (this.state.activity === null) return null;
     console.log(this.state.activity);
@@ -40,7 +41,9 @@ class DiscoverOneGif extends React.Component {
           </div>
         </Link>
         <p>Heart ICON</p>
-        <h4>{this.state.activity.title}</h4>
+        <Link to={`/activities/${this.state.activity._id}`}>
+          <h4>{this.state.activity.highlight}</h4>
+        </Link>
       </div>
     );
   }
