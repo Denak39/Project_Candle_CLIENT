@@ -1,8 +1,8 @@
 import React from "react";
 import { withRouter, Link, Redirect } from "react-router-dom";
-import UserContext from "../Auth/UserContext";
-import Footer from "../Footer";
-import apiHandler from "../../api/apiHandler";
+import UserContext from "../../Auth/UserContext";
+import Footer from "../../Footer";
+import apiHandler from "../../../api/apiHandler";
 
 class MasterForm extends React.Component {
   static contextType = UserContext;
@@ -227,7 +227,7 @@ function Step2(props) {
           <span>J'ai tout mon temps</span>
         </label>
       </div>
-      <Link to={`/activities/${props.handleFilter}`}>
+      <Link to={`/discover/${props.handleFilter}`}>
         <button className="btn btn-success btn-block">
           Découvrir une activité
         </button>

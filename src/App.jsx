@@ -9,7 +9,9 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import OneActivity from "./pages/OneActivity";
 import StepbyStep from "./pages/StepbyStep";
-import RandomActivity from "./components/Forms/RandomActivity";
+import RandomActivity from "./components/Forms/discover/RandomActivity";
+import DiscoverOneGif from "./components/Forms/discover/DiscoverOneGif";
+
 function App() {
   return (
     <div className="App">
@@ -21,6 +23,7 @@ function App() {
         <Route exact path="/activities/DIY" component={ActivitiesDIY}></Route>
         <Route exact path="/activities/:id/steps" component={StepbyStep} />
         <Route exact path="/activities/:id" component={OneActivity} />
+        <Route exact path="/discover/:id" component={DiscoverOneGif} />
         <Route exact path="/discover" component={RandomActivity} />
         <ProtectedRoute exact path="/profile" component={Profile} />
       </Switch>
