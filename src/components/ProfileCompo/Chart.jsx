@@ -46,16 +46,14 @@ const options = {
 export default function LineChart(props) {
   const labelsDate = props.mood.mood.map((mood) => mood.date);
   const labelsMood = props.mood.mood.map((mood) => mood.mood);
-  const convertMood = {
-    "Stressé(e)": 1,
-    "Fatigué(e)": 2,
-    "Ennuyé(e)": 3,
-    "Joyeux(se)": 4,
-    "Motivé(e)": 5,
-  };
-  const convert = labelsMood.map((mood) => convertMood.mood);
-  console.log("convert", convert);
-  console.log("labelsMood", labelsMood);
+  const convertMood = [
+    "Stressé(e)",
+    "Fatigué(e)",
+    "Ennuyé(e)",
+    "Joyeux(se)",
+    "Motivé(e)",
+  ];
+  const convert = labelsMood.map((mood) => convertMood.indexOf(mood));
 
   const options = {
     scales: {
@@ -73,7 +71,7 @@ export default function LineChart(props) {
     datasets: [
       {
         label: "# of Votes",
-        data: labelsMood,
+        data: convert,
         fill: false,
         backgroundColor: "rgb(255, 99, 132)",
         borderColor: "rgba(255, 99, 132, 0.2)",
