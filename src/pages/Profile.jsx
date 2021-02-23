@@ -36,7 +36,7 @@ const Profile = (props) => {
         </button>
       ))}
       {compo === "Galerie" && <Galerie />}
-      {compo === "Statistiques" && <Stat />}
+      {compo === "Statistiques" && <Stat mood={context.user.mood} />}
       {compo === "Préférences" && <Pref />}
     </div>
   );
