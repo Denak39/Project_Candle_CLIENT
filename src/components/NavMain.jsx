@@ -6,7 +6,7 @@ import Mood from "../components/Mood";
 import dayjs from "dayjs";
 
 import "../styles/NavMain.css";
-import UserContext from "./Auth/UserContext";
+// import UserContext from "./Auth/UserContext";
 
 const NavMain = (props) => {
   const { context } = props;
@@ -29,7 +29,7 @@ const NavMain = (props) => {
       .map((mood) => mood.date.slice(0, 10))
       .includes(dayjs().format("YYYY-MM-DD"));
 
-  const today = dayjs().format("YYYY-MM-DD");
+  // const today = dayjs().format("YYYY-MM-DD");
 
   return (
     <div>

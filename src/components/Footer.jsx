@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { withUser } from "../components/Auth/withUser";
+// import { withUser } from "../components/Auth/withUser";
 
 const Footer = (props) => {
   return (

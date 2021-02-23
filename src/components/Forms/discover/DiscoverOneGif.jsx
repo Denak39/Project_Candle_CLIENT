@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { withRouter, Link, Redirect } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 import UserContext from "../../Auth/UserContext";
-import Footer from "../../Footer";
+// import Footer from "../../Footer";
 import apiHandler from "../../../api/apiHandler";
 import { withUser } from "../../Auth/withUser";
 

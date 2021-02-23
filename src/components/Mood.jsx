@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { withUser } from "./Auth/withUser";
 import dayjs from "dayjs";
 import apiHandler from "../api/apiHandler";

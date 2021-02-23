@@ -53,7 +53,7 @@ class Home extends React.Component {
       return "Cosy";
     } else if (DIY.includes(interest)) {
       return "DIY";
-    } else {
+    } else if (PleinAir.includes(interest)) {
       return "Plein Air";
     }
   }

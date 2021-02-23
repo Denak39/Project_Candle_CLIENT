@@ -15,7 +15,7 @@ class OneActivity extends React.Component {
   // this.context.user
   handleSubmit = (event) => {
     // event.preventDefault();
-    const activityId = this.props.match.params.id;
+    // const activityId = this.props.match.params.id;
     apiHandler
       .updateUser(this.state)
       .then((data) => {
