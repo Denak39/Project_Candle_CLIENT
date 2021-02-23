@@ -6,7 +6,7 @@ const Footer = (props) => {
   return (
     <div>
       <nav className="Footer">
-        <NavLink exact to="/">
+        <NavLink exact to="/profile">
           <h3 className="logo">Pour vous</h3>
         </NavLink>
         <NavLink exact to="/activities/PleinAir">

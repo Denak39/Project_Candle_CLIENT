@@ -11,8 +11,6 @@ import UserContext from "./Auth/UserContext";
 const NavMain = (props) => {
   const { context } = props;
   let history = useHistory();
-  console.log("histo", history);
-  console.log("splice", history.location.pathname.slice(0, -25));
 
   function handleLogout() {
     apiHandler
