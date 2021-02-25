@@ -21,25 +21,13 @@ class Activities extends React.Component {
   handleFavorites(activity) {
     let copyFavoritesActivities = [];
     if (this.state.user.favoritesActivities.includes(activity)) {
-      copyFavoritesActivities = [
-        ...this.state.user.favoritesActivities.filter(
-          (favorites) => favorites !== activity
-        ),
-      ];
-      console.log("copy", copyFavoritesActivities);
-      apiHandler.takeOffFavorite(activity).then((data) => {
-        console.log("dataFav", data);
-      });
+      apiHandler.takeOffFavorite(activity).then((data) => {});
     } else {
-      copyFavoritesActivities = [
-        ...this.state.user.favoritesActivities,
-        activity,
-      ];
-      console.log("copy", copyFavoritesActivities);
-      apiHandler.addToFavorite(activity).then((data) => {
-        console.log("dataFav", data);
-      });
+      apiHandler.addToFavorite(activity).then((data) => {});
     }
+    apiHandler.getOneUser().then((data) => {
+      this.setState({ user: data });
+    });
   }
 
   componentDidMount() {
