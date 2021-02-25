@@ -84,4 +84,18 @@ export default {
       .then((res) => res.data)
       .catch(errorHandler);
   },
+
+  addToFavorite(favoriteId) {
+    return service
+      .post(`/api/user/favorite/${favoriteId}`)
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
+
+  takeOffFavorite(favoriteId) {
+    return service
+      .post(`/api/user/no-favorite/${favoriteId}`)
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
 };

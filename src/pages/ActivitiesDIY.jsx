@@ -4,16 +4,42 @@ import apiHandler from "../api/apiHandler";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import NavMain from "../components/NavMain";
+const copyFavoritesActivities = [];
 
 class Activities extends React.Component {
   static contextType = UserContext;
   state = {
     activities: [],
     filter: "Tout",
+    user: "",
   };
 
   handlefilter(option) {
     this.setState({ filter: option });
+  }
+
+  handleFavorites(activity) {
+    let copyFavoritesActivities = [];
+    if (this.state.user.favoritesActivities.includes(activity)) {
+      copyFavoritesActivities = [
+        ...this.state.user.favoritesActivities.filter(
+          (favorites) => favorites !== activity
+        ),
+      ];
+      console.log("copy", copyFavoritesActivities);
+      apiHandler.takeOffFavorite(activity).then((data) => {
+        console.log("dataFav", data);
+      });
+    } else {
+      copyFavoritesActivities = [
+        ...this.state.user.favoritesActivities,
+        activity,
+      ];
+      console.log("copy", copyFavoritesActivities);
+      apiHandler.addToFavorite(activity).then((data) => {
+        console.log("dataFav", data);
+      });
+    }
   }
 
   componentDidMount() {
@@ -27,6 +53,10 @@ class Activities extends React.Component {
       });
       this.setState({ activities: filteredActivities });
       console.log(this.state.activities[0].subcategories);
+    });
+    apiHandler.getOneUser().then((data) => {
+      this.setState({ user: data });
+      console.log("user", this.state.user);
     });
   }
   // get the category from the path
@@ -65,13 +95,27 @@ class Activities extends React.Component {
                   <div className="activities-image">
                     <img src={activity.image} alt={activity.title} />
                   </div>
-                  <div className="activities-content">
+                </Link>
+                <div className="activities-content">
+                  <Link to={`/activities/${activity._id}`}>
                     <h1>{activity.title}</h1>
                     <h2>{activity.subcategories}</h2>
                     <p>{activity.duration} min</p>
                     <p>{activity.difficulty}</p>
-                  </div>
-                </Link>
+                  </Link>
+                  {this.state.user.favoritesActivities &&
+                  this.state.user.favoritesActivities.includes(activity._id) ? (
+                    <i
+                      class="fas fa-heart"
+                      onClick={() => this.handleFavorites(activity._id)}
+                    ></i>
+                  ) : (
+                    <i
+                      class="far fa-heart"
+                      onClick={() => this.handleFavorites(activity._id)}
+                    ></i>
+                  )}
+                </div>
               </div>
             );
           })}
@@ -90,6 +134,13 @@ class Activities extends React.Component {
                       <h2>{activity.subcategories}</h2>
                       <p>{activity.duration} min</p>
                       <p>{activity.difficulty}</p>
+                      {this.state.user.favoritesActivities.includes(
+                        activity._id
+                      ) ? (
+                        <i class="fas fa-heart"></i>
+                      ) : (
+                        <i class="far fa-heart"></i>
+                      )}
                     </div>
                   </Link>
                 </div>
