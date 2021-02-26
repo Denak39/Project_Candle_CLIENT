@@ -1,29 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import apiHandler from "../api/apiHandler";
-
 export default function Favorites() {
   let history = useHistory();
-
   const [user, setUser] = useState("");
-
   useEffect(() => {
-    apiHandler.getOneUser().then((data) => {
+    apiHandler.getOneUserFav().then((data) => {
       console.log("data", data);
       setUser(data);
     });
   }, []);
-
   console.log("user", user.favoritesActivities);
-
   const handleFavorites = (activity) => {
     apiHandler.takeOffFavorite(activity).then((data) => {});
-    apiHandler.getOneUser().then((data) => {
+    apiHandler.getOneUserFav().then((data) => {
       console.log("data", data);
       setUser(data);
     });
   };
-
   return (
     <div>
       <header>
@@ -39,12 +33,27 @@ export default function Favorites() {
             .map((activity, id) => {
               return (
                 <div key={id}>
-                  <h2>{activity.title}</h2>
-
-                  <i
-                    className="fas fa-heart"
-                    onClick={() => handleFavorites(activity._id)}
-                  ></i>
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "400px",
+                      objectFit: "cover",
+                      backgroundRepeat: "no-repeat",
+                      backgroundImage: `url(${activity.image})`,
+                    }}
+                  >
+                    {/* <img src="" alt=""/> */}
+                    <i
+                      className="fas fa-heart"
+                      onClick={() => handleFavorites(activity._id)}
+                    ></i>
+                  </div>
+                  <div>
+                    <h2>{activity.title}</h2>
+                    <p>
+                      {activity.subcategories} - {activity.duration} min
+                    </p>
+                  </div>
                 </div>
               );
             })}
@@ -55,7 +64,27 @@ export default function Favorites() {
           user.favoritesActivities.reverse().map((activity, id) => {
             return (
               <div key={id}>
-                <h2>{activity.title}</h2>
+                <div
+                  style={{
+                    width: "100%",
+                    height: "400px",
+                    objectFit: "cover",
+                    backgroundRepeat: "no-repeat",
+                    backgroundImage: `url(${activity.image})`,
+                  }}
+                >
+                  {/* <img src="" alt=""/> */}
+                  <i
+                    className="fas fa-heart"
+                    onClick={() => handleFavorites(activity._id)}
+                  ></i>
+                </div>
+                <div>
+                  <h2>{activity.title}</h2>
+                  <p>
+                    {activity.subcategories} - {activity.duration} min
+                  </p>
+                </div>
               </div>
             );
           })}
