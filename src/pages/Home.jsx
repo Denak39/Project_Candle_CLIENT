@@ -4,6 +4,8 @@ import NavMain from "../components/NavMain";
 import apiHandler from "../api/apiHandler";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import Mood from "../components/Mood";
+import dayjs from "dayjs";
 
 class Home extends React.Component {
   static contextType = UserContext;
@@ -112,9 +114,17 @@ class Home extends React.Component {
     const userActivityDisplay = this.state.allActivities.filter((activity) =>
       userActivitiesId.includes(activity._id)
     );
+    const dateMood =
+      this.state.user &&
+      this.state.user.mood
+        .map((mood) => mood.date.slice(0, 10))
+        .includes(dayjs().format("YYYY-MM-DD"));
     return (
       <div>
-        <NavMain />
+        <div>
+          <NavMain />
+          {!dateMood && <Mood />}
+        </div>
         <Link to="/discover">
           <div>
             <img src="" alt="" />

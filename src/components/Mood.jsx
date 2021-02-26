@@ -21,7 +21,7 @@ function Mood() {
         console.log(error);
         // Display error message here, if you set the state
       });
-    console.log(mood);
+    apiHandler.getOneUser().then((data) => {});
   };
 
   return (

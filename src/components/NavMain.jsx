@@ -2,8 +2,7 @@ import React from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { withUser } from "../components/Auth/withUser";
 import apiHandler from "../api/apiHandler";
-import Mood from "../components/Mood";
-import dayjs from "dayjs";
+// import Mood from "../components/Mood";
 
 import "../styles/NavMain.css";
 // import UserContext from "./Auth/UserContext";
@@ -23,11 +22,11 @@ const NavMain = (props) => {
       });
   }
 
-  const dateMood =
-    context.user &&
-    context.user.mood
-      .map((mood) => mood.date.slice(0, 10))
-      .includes(dayjs().format("YYYY-MM-DD"));
+  // const dateMood =
+  //   context.user &&
+  //   context.user.mood
+  //     .map((mood) => mood.date.slice(0, 10))
+  //     .includes(dayjs().format("YYYY-MM-DD"));
 
   // const today = dayjs().format("YYYY-MM-DD");
 
@@ -82,7 +81,7 @@ const NavMain = (props) => {
       <div>
         <h1>Bonjour {context.user && context.user.name} !</h1>
       </div>
-      {!dateMood && <Mood />}
+      {/* {!dateMood && <Mood />} */}
     </div>
   );
 };

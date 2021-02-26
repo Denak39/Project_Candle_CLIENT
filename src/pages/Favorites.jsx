@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import apiHandler from "../api/apiHandler";
 
 export default function Favorites() {
@@ -42,7 +42,7 @@ export default function Favorites() {
                   <h2>{activity.title}</h2>
 
                   <i
-                    class="fas fa-heart"
+                    className="fas fa-heart"
                     onClick={() => handleFavorites(activity._id)}
                   ></i>
                 </div>

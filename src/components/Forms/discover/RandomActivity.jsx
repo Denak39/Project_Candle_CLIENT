@@ -43,17 +43,30 @@ class MasterForm extends React.Component {
   filterAll() {
     console.log(this.state.activities);
     console.log(this.state.categories);
-    let filterCategories = this.state.activities
-      .filter((activity) => activity.categories === this.state.categories)
-      .filter((activity) => Number(activity.duration) < this.state.duration);
-    console.log("filtered", filterCategories);
-    const activityRandom = filterCategories.map((activity) => activity._id)[
-      Math.floor(
-        filterCategories.map((activity) => activity._id).length * Math.random()
-      )
-    ];
-    console.log(activityRandom);
-    return activityRandom;
+    if (this.state.categories === "Tout") {
+      let filterCategories = this.state.activities.filter(
+        (activity) => Number(activity.duration) < this.state.duration
+      );
+      const activityRandom = filterCategories.map((activity) => activity._id)[
+        Math.floor(
+          filterCategories.map((activity) => activity._id).length *
+            Math.random()
+        )
+      ];
+      return activityRandom;
+    } else {
+      let filterCategories = this.state.activities
+        .filter((activity) => activity.categories === this.state.categories)
+        .filter((activity) => Number(activity.duration) < this.state.duration);
+      console.log("filtered", filterCategories);
+      const activityRandom = filterCategories.map((activity) => activity._id)[
+        Math.floor(
+          filterCategories.map((activity) => activity._id).length *
+            Math.random()
+        )
+      ];
+      return activityRandom;
+    }
   }
 
   _next = () => {
@@ -180,7 +193,7 @@ function Step1(props) {
           id="categories"
           name="categories"
           type="radio"
-          value=""
+          value="Tout"
           onChange={props.handleChange}
         />
         <label htmlFor="Aucun">

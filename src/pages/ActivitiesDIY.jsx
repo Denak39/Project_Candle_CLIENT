@@ -4,7 +4,6 @@ import apiHandler from "../api/apiHandler";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import NavMain from "../components/NavMain";
-const copyFavoritesActivities = [];
 
 class Activities extends React.Component {
   static contextType = UserContext;
@@ -19,7 +18,6 @@ class Activities extends React.Component {
   }
 
   handleFavorites(activity) {
-    let copyFavoritesActivities = [];
     if (this.state.user.favoritesActivities.includes(activity)) {
       apiHandler.takeOffFavorite(activity).then((data) => {});
     } else {
@@ -94,12 +92,12 @@ class Activities extends React.Component {
                   {this.state.user.favoritesActivities &&
                   this.state.user.favoritesActivities.includes(activity._id) ? (
                     <i
-                      class="fas fa-heart"
+                      className="fas fa-heart"
                       onClick={() => this.handleFavorites(activity._id)}
                     ></i>
                   ) : (
                     <i
-                      class="far fa-heart"
+                      className="far fa-heart"
                       onClick={() => this.handleFavorites(activity._id)}
                     ></i>
                   )}
@@ -125,9 +123,9 @@ class Activities extends React.Component {
                       {this.state.user.favoritesActivities.includes(
                         activity._id
                       ) ? (
-                        <i class="fas fa-heart"></i>
+                        <i className="fas fa-heart"></i>
                       ) : (
-                        <i class="far fa-heart"></i>
+                        <i className="far fa-heart"></i>
                       )}
                     </div>
                   </Link>
