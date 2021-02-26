@@ -65,6 +65,13 @@ export default {
       .catch(errorHandler);
   },
 
+  getOneUserFav() {
+    return service
+      .get("/api/user/me2")
+      .then((res) => res.data)
+      .catch(errorHandler);
+  },
+
   updateUser(data) {
     return service
       .patch("/api/user/me", data)
