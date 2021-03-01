@@ -1,5 +1,6 @@
 import React from "react";
 import LineChart from "../ProfileCompo/Chart";
+
 import ActivitiesStat from "../ProfileCompo/ActivitiesStat";
 
 export default function Stat(props) {

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import DoughnutChart from "../ProfileCompo/Doughnut";
 import apiHandler from "../../api/apiHandler";
 
 export default class ActivitiesStat extends Component {
@@ -45,7 +46,7 @@ export default class ActivitiesStat extends Component {
     console.log("activityCompletedDetails", activityCompletedDetails);
 
     const calculateTime = () => {
-      if (!activityCompletedDetails) {
+      if (!activityCompletedDetails || activityCompletedDetails.length === 0) {
         return null;
       } else {
         return activityCompletedDetails
@@ -63,27 +64,19 @@ export default class ActivitiesStat extends Component {
         {activityCompleted && (
           <div>
             <div>
-              <p>{relaxTime} min</p>
-              <p>passées à se relaxer</p>
+              {relaxTime ? <p>{relaxTime} min</p> : <p>0 min</p>}
+              <p>passée(s) à se relaxer</p>
             </div>
             <div>
               {activityCompleted && <p> {activityCompleted.length}</p>}
-              <p>activités complétées</p>
+              <p>activité(s) complétée(s)</p>
             </div>
           </div>
         )}
-        {!activityCompleted && (
-          <div>
-            <div>
-              <p>0 min</p>
-              <p>passées à se relaxer</p>
-            </div>
-            <div>
-              <p>0</p>
-              <p>activités complétées</p>
-            </div>
-          </div>
-        )}
+        <div>
+          <h2>Vos activités réalisées</h2>
+          <DoughnutChart activityCompletedDetails={activityCompletedDetails} />
+        </div>
       </div>
     );
   }
