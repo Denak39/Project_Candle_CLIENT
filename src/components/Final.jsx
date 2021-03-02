@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 export default class Final extends Component {
   static contextType = UserContext;
   state = {
+    activityId: this.props.activityId,
+    userActivities: [],
     user: "",
     feeling: "",
     grades: "",
@@ -24,40 +26,59 @@ export default class Final extends Component {
     this.setState({
       [name]: value,
     });
+    const activityId = this.props.activityId;
+
+    const newuserActivities = [
+      ...this.state.user.userActivities.filter(
+        (activity) => activity._id !== activityId
+      ),
+      { _id: activityId, completed: true },
+    ];
+
+    this.setState({ userActivities: newuserActivities });
   };
 
-  handleClick2 = (event) => {
-    const { name, value } = event.target;
-    const gradesCopy = [...this.state.grades];
-    const gradesIndex = gradesCopy.findIndex((grades) => grades === value);
-    if (event.target.checked === true) {
-      gradesCopy.push(value);
-    } else {
-      gradesCopy.splice(gradesIndex, 1);
-    }
-    this.setState({
-      [name]: gradesCopy,
-    });
-  };
+  // handleClick2 = (event) => {
+  //   const { name, value } = event.target;
+  //   const gradesCopy = [...this.state.grades];
+  //   const gradesIndex = gradesCopy.findIndex((grades) => grades === value);
+  //   if (event.target.checked === true) {
+  //     gradesCopy.push(value);
+  //   } else {
+  //     gradesCopy.splice(gradesIndex, 1);
+  //   }
+  //   this.setState({
+  //     [name]: gradesCopy,
+  //   });
+  // };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const key = event.target.name;
-    const value = event.target.value;
+    // const key = event.target.name;
+    // const value = event.target.value;
 
-    this.setState({ [key]: value });
-    console.log("Hello", this.state.feeling);
+    // this.setState({ [key]: value });
+    // console.log("Hello", this.state.feeling);
+
+    // apiHandler
+    //   .updateActivity(this.props.activityId, this.state)
+    //   .then((data) => {
+    //     console.log("HelloBis", this.state.feeling);
+    //     this.context.setUser(data);
+    //     // this.props.history.push("/");
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     // Display error message here, if you set the state
+    //   });
 
     apiHandler
-      .updateActivity(this.props.activityId, this.state)
+      .updateUser3(this.state)
       .then((data) => {
-        console.log("HelloBis", this.state.feeling);
         this.context.setUser(data);
-        // this.props.history.push("/");
       })
       .catch((error) => {
         console.log(error);
-        // Display error message here, if you set the state
       });
   };
 
@@ -70,7 +91,7 @@ export default class Final extends Component {
 
   render() {
     const { activityId } = this.props;
-    console.log(activityId);
+    console.log("activityId", activityId);
     return (
       <div className="Final">
         <h1>Bien joué, {this.state.user.name} !</h1>
@@ -193,9 +214,9 @@ export default class Final extends Component {
               </label>
             </div>
           </div>
-          <Link to={`/`}>
-            <button>Envoyer</button>
-          </Link>
+          {/* <Link to={`/`}> */}
+          <button onClick={this.handleSubmit}>Envoyer</button>
+          {/* </Link> */}
         </form>
       </div>
     );
