@@ -214,9 +214,9 @@ export default class Final extends Component {
               </label>
             </div>
           </div>
-          {/* <Link to={`/`}> */}
-          <button onClick={this.handleSubmit}>Envoyer</button>
-          {/* </Link> */}
+          <Link to={`/`}>
+            <button onClick={this.handleSubmit}>Envoyer</button>
+          </Link>
         </form>
       </div>
     );

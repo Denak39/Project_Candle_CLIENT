@@ -11,23 +11,51 @@ class MasterForm extends React.Component {
     this.state = {
       currentStep: 1,
       email: "",
-      name: "",
       password: "",
-      genre: "",
-      profileImage: "",
-      interest: [],
-      animals: [],
-      activities: [],
+      societyName: "",
+      chain: [],
+      VATNumber: [],
+      SIRET: [],
+      facturationAddress: [],
+      ZIPcode: [],
+      city: [],
+      country: [],
+      firstNameCEO: [],
+      lastNameCEO: [],
+      phoneCEO: [],
+      cellPhoneCEO: [],
+      firstNameSignatory: [],
+      lastNameSignatory: [],
+      emailSignatory: [],
+      phoneSignatory: [],
+      cellPhoneSignatory: [],
+      firstNameAccounting: [],
+      lastNameAccounting: [],
+      phoneAccounting: [],
+      cellPhoneAccounting: [],
+      emailAccounting: [],
+      paymentDelay: [],
+      paymentMode: [],
+      firstNameTechnical: [],
+      lastNameTechnical: [],
+      phoneTechnical: [],
+      cellPhoneTechnical: [],
+      emailTechnical: [],
+      deliveryCompanyName: [],
+      deliveryAddress: [],
+      deliveryZIPcode: [],
+      deliveryCity: [],
+      deliveryContactEmail: [],
+      deliveryContactPhone: [],
+      contractSigned: [],
       disabled: true,
-      habits: [],
-      needs: [],
     };
   }
-  componentDidMount() {
-    apiHandler.getAllActivities().then((data) => {
-      this.setState({ activities: data });
-    });
-  }
+  // componentDidMount() {
+  //   apiHandler.getAllActivities().then((data) => {
+  //     this.setState({ activities: data });
+  //   });
+  // }
   handleChange = (event) => {
     const { name, value } = event.target;
     this.setState({
@@ -180,38 +208,64 @@ class MasterForm extends React.Component {
           <Step1
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
-            email={this.state.email}
             password={this.state.password}
-            genre={this.state.genre}
+            societyName={this.state.societyName}
+            chain={this.state.chain}
+            VATNumber={this.state.VATNumber}
+            SIRET={this.state.SIRET}
+            facturationAddress={this.state.facturationAddress}
+            ZIPcode={this.state.ZIPcode}
+            city={this.state.city}
+            country={this.state.country}
+            firstNameCEO={this.state.firstNameCEO}
+            lastNameCEO={this.state.lastNameCEO}
+            phoneCEO={this.state.phoneCEO}
+            cellPhoneCEO={this.state.cellPhoneCEO}
+            email={this.state.email}
           />
           <Step2
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
-            name={this.state.name}
+            firstNameSignatory={this.state.firstNameSignatory}
+            lastNameSignatory={this.state.lastNameSignatory}
+            emailSignatory={this.state.emailSignatory}
+            phoneSignatory={this.state.phoneSignatory}
+            cellPhoneSignatory={this.state.cellPhoneSignatory}
           />
           <Step3
             currentStep={this.state.currentStep}
-            name={this.state.name}
-            habits={this.state.habits}
-            handleClick3={this.handleClick3}
+            handleChange={this.handleChange}
+            firstNameAccounting={this.state.firstNameAccounting}
+            lastNameAccounting={this.state.lastNameAccounting}
+            phoneAccounting={this.state.phoneAccounting}
+            cellPhoneAccounting={this.state.cellPhoneAccounting}
+            emailAccounting={this.state.emailAccounting}
+            paymentDelay={this.state.paymentDelay}
+            paymentMode={this.state.paymentMode}
           />
           <Step4
             currentStep={this.state.currentStep}
-            needs={this.state.needs}
-            handleClick4={this.handleClick4}
+            handleChange={this.handleChange}
+            firstNameTechnical={this.state.firstNameTechnical}
+            lastNameTechnical={this.state.lastNameTechnical}
+            phoneTechnical={this.state.phoneTechnical}
+            cellPhoneTechnical={this.state.cellPhoneTechnical}
+            emailTechnical={this.state.emailTechnical}
           />
           <Step5
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
-            interests={this.state.interest}
-            activities={this.state.activities}
-            handleClick2={this.handleClick2}
+            deliveryCompanyName={this.state.deliveryCompanyName}
+            deliveryAddress={this.state.deliveryAddress}
+            deliveryZIPcode={this.state.deliveryZIPcode}
+            deliveryCity={this.state.deliveryCity}
+            deliveryContactEmail={this.state.deliveryContactEmail}
+            deliveryContactPhone={this.state.deliveryContactPhone}
           />
           <Step6
             currentStep={this.state.currentStep}
             handleChange={this.handleChange}
-            animals={this.state.animals}
-            handleClick={this.handleClick}
+            contractSigned={this.state.contractSigned}
             disabled={this.state.disabled}
           />
 
@@ -228,19 +282,7 @@ function Step1(props) {
 
   return (
     <div className="form-group">
-      <h2>Inscription</h2>
-      <label htmlFor="email">Email address</label>
-      <input
-        className="form-control"
-        id="email"
-        name="email"
-        type="text"
-        placeholder="Enter email"
-        value={props.email}
-        onChange={props.handleChange}
-        required
-      />
-
+      <h2>Informations sur la société</h2>
       <label htmlFor="password">Password</label>
       <input
         className="form-control"
@@ -253,24 +295,182 @@ function Step1(props) {
         required
       />
       <div>
-        <label required htmlFor="genre">
-          Genre
+        <label required htmlFor="societyName">
+          Nom de société
         </label>
         <input
           className="form-control"
-          id="genre"
-          name="genre"
-          type="radio"
-          value="Homme"
+          id="societyName"
+          name="societyName"
+          type="text"
+          value={props.societyName}
           onChange={props.handleChange}
         />
+      </div>
+      <div>
+        <label required htmlFor="chain">
+          Enseigne
+        </label>
         <input
           className="form-control"
-          id="genre"
-          name="genre"
-          type="radio"
-          value="Femme"
+          id="chain"
+          name="chain"
+          type="text"
+          value={props.chain}
           onChange={props.handleChange}
+        />
+      </div>
+      <div>
+        <label required htmlFor="VATNumber">
+          N° TVA INTRACOM
+        </label>
+        <input
+          className="form-control"
+          id="VATNumber"
+          name="VATNumber"
+          type="text"
+          value={props.VATNumber}
+          onChange={props.handleChange}
+        />
+      </div>
+      <div>
+        <label required htmlFor="SIRET">
+          N° SIRET
+        </label>
+        <input
+          className="form-control"
+          id="SIRET"
+          name="SIRET"
+          type="text"
+          value={props.SIRET}
+          onChange={props.handleChange}
+          onKeyPress={(event) => {
+            if (!/[0-9]/.test(event.key)) {
+              event.preventDefault();
+            }
+          }}
+        />
+      </div>
+      <div>
+        <label required htmlFor="facturationAddress">
+          Addresse de Facturation
+        </label>
+        <input
+          className="form-control"
+          id="facturationAddress"
+          name="facturationAddress"
+          type="text"
+          value={props.facturationAddress}
+          onChange={props.handleChange}
+        />
+      </div>
+      <div>
+        <label required htmlFor="ZIPcode">
+          Code postal
+        </label>
+        <input
+          className="form-control"
+          id="ZIPcode"
+          name="ZIPcode"
+          type="text"
+          value={props.ZIPcode}
+          onChange={props.handleChange}
+        />
+      </div>
+      <div>
+        <label required htmlFor="city">
+          Ville
+        </label>
+        <input
+          className="form-control"
+          id="city"
+          name="city"
+          type="text"
+          value={props.city}
+          onChange={props.handleChange}
+        />
+      </div>
+      <div>
+        <label required htmlFor="country">
+          Pays
+        </label>
+        <input
+          className="form-control"
+          id="country"
+          name="country"
+          type="text"
+          value={props.country}
+          onChange={props.handleChange}
+        />
+      </div>
+      <div>
+        <label required htmlFor="firstNameCEO">
+          Prénom du dirigeant
+        </label>
+        <input
+          className="form-control"
+          id="firstNameCEO"
+          name="firstNameCEO"
+          type="text"
+          value={props.firstNameCEO}
+          onChange={props.handleChange}
+        />
+      </div>
+      <div>
+        <label required htmlFor="lastNameCEO">
+          Nom du dirigeant
+        </label>
+        <input
+          className="form-control"
+          id="lastNameCEO"
+          name="lastNameCEO"
+          type="text"
+          value={props.lastNameCEO}
+          onChange={props.handleChange}
+        />
+      </div>
+      <div>
+        <label required htmlFor="phoneCEO">
+          Téléphone fixe du dirigeant
+        </label>
+        <input
+          className="form-control"
+          id="phoneCEO"
+          name="phoneCEO"
+          type="tel"
+          value={props.phoneCEO}
+          onChange={props.handleChange}
+          // onKeyPress={(event) => {
+          //   if (!/[0-9]/.test(event.key)) {
+          //     event.preventDefault();
+          //   }
+          // }}
+        />
+      </div>
+      <div>
+        <label required htmlFor="cellPhoneCEO">
+          Téléphone portable du dirigeant
+        </label>
+        <input
+          className="form-control"
+          id="cellPhoneCEO"
+          name="cellPhoneCEO"
+          type="text"
+          value={props.cellPhoneCEO}
+          onChange={props.handleChange}
+        />
+      </div>
+      <div>
+        <label htmlFor="email">Addresse email du dirigeant</label>
+        <input
+          className="form-control"
+          id="email"
+          name="email"
+          type="text"
+          placeholder="Email"
+          value={props.email}
+          onChange={props.handleChange}
+          required
         />
       </div>
     </div>
@@ -283,18 +483,74 @@ function Step2(props) {
   }
   return (
     <div className="form-group">
-      <h2>Comment vous appelez-vous ?</h2>
-      <label htmlFor="name">name</label>
-      <input
-        className="form-control"
-        id="name"
-        name="name"
-        type="text"
-        placeholder="Enter name"
-        value={props.name}
-        onChange={props.handleChange}
-        required
-      />
+      <div>
+        <h2>Informations sur le contact signataire</h2>
+        <label htmlFor="name">Prénom du signataire</label>
+        <input
+          className="form-control"
+          id="firstNameSignatory"
+          name="firstNameSignatory"
+          type="text"
+          placeholder="Prénom"
+          value={props.firstNameSignatory}
+          onChange={props.handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="lastNameSignatory">Nom du signataire</label>
+        <input
+          className="form-control"
+          id="lastNameSignatory"
+          name="lastNameSignatory"
+          type="text"
+          placeholder="Nom"
+          value={props.lastNameSignatory}
+          onChange={props.handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="emailSignatory">Addresse email du signataire</label>
+        <input
+          className="form-control"
+          id="emailSignatory"
+          name="emailSignatory"
+          type="text"
+          placeholder="Enter email"
+          value={props.emailSignatory}
+          onChange={props.handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="phoneSignatory">Téléphone fixe du signataire</label>
+        <input
+          className="form-control"
+          id="phoneSignatory"
+          name="phoneSignatory"
+          type="text"
+          placeholder="Enter phone number"
+          value={props.phoneSignatory}
+          onChange={props.handleChange}
+          required
+        />
+      </div>
+      <div>
+        <label htmlFor="cellPhoneSignatory">
+          Téléphone portable du signataire
+        </label>
+        <input
+          className="form-control"
+          id="cellPhoneSignatory"
+          name="cellPhoneSignatory"
+          type="text"
+          placeholder="Enter phone number"
+          value={props.cellPhoneSignatory}
+          onChange={props.handleChange}
+          required
+        />
+      </div>
     </div>
   );
 }
@@ -306,80 +562,106 @@ function Step3(props) {
   return (
     <React.Fragment>
       <div className="form-group">
-        <h2>Faisons connaissance {props.name} ! </h2>
-        <p>Qu'est-ce qui vous détend d'habitude ?</p>
-        <input
-          className="form-control"
-          id="habits"
-          name="habits"
-          type="checkbox"
-          placeholder="Je contacte mes proches pour discuter"
-          value="détente"
-          onChange={props.handleClick3}
-        />
-        <label>
-          <span>Je contacte mes proches pour discuter</span>
-        </label>
-        <input
-          className="form-control"
-          id="habits"
-          name="habits"
-          type="checkbox"
-          placeholder="Je pratique des activités manuelles"
-          value="manu"
-          onChange={props.handleClick3}
-        />
-        <label>
-          <span>Je pratique des activités manuelles</span>
-        </label>
-        <input
-          className="form-control"
-          id="habits"
-          name="habits"
-          type="checkbox"
-          placeholder="Je lis, j'écoute de la musique, je joue..."
-          value="musique"
-          onChange={props.handleClick3}
-        />
-        <label>
-          <span>Je lis, j'écoute de la musique, je joue...</span>
-        </label>
-        <input
-          className="form-control"
-          id="habits"
-          name="habits"
-          type="checkbox"
-          placeholder="Je profite du plein air"
-          value="sortie"
-          onChange={props.handleClick3}
-        />
-        <label>
-          <span>Je profite du plein air</span>
-        </label>
-        <input
-          className="form-control"
-          id="habits"
-          name="habits"
-          type="checkbox"
-          placeholder="Je fais du yoga ou de la méditation"
-          value="yoga"
-          onChange={props.handleClick3}
-        />
-        <label>
-          <span>Je fais du yoga ou de la méditation</span>
-        </label>
-        <input
-          className="form-control"
-          id="habits"
-          name="habits"
-          type="checkbox"
-          placeholder="Je me créé une ambiance cocooning"
-          value="cocon"
-          onChange={props.handleClick3}
-        />
-        <label>
-          <span>Je me créé une ambiance cocooning</span>
-        </label>
+        <div>
+          <h2>Informations sur le contact comptabilité</h2>
+          <label htmlFor="firstNameAccounting">Prénom du comptable</label>
+          <input
+            className="form-control"
+            id="firstNameAccounting"
+            name="firstNameAccounting"
+            type="text"
+            placeholder="Prénom"
+            value={props.firstNameAccounting}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="lastNameAccounting">Nom du comptable</label>
+          <input
+            className="form-control"
+            id="lastNameAccounting"
+            name="lastNameAccounting"
+            type="text"
+            placeholder="Nom"
+            value={props.lastNameAccounting}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="emailAccounting">Addresse email du comptable</label>
+          <input
+            className="form-control"
+            id="emailAccounting"
+            name="emailAccounting"
+            type="text"
+            placeholder="Enter email"
+            value={props.emailAccounting}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="phoneAccounting">Téléphone fixe du comptable</label>
+          <input
+            className="form-control"
+            id="phoneAccounting"
+            name="phoneAccounting"
+            type="text"
+            placeholder="Enter phone number"
+            value={props.phoneAccounting}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="cellPhoneAccounting">
+            Téléphone portable du comptable
+          </label>
+          <input
+            className="form-control"
+            id="cellPhoneAccounting"
+            name="cellPhoneAccounting"
+            type="text"
+            value={props.cellPhoneAccounting}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="paymentDelay">Délai de paiement</label>
+          <input
+            className="form-control"
+            id="paymentDelay"
+            name="paymentDelay"
+            type="text"
+            value={props.paymentDelay}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="paymentMode">Méthode de paiement</label>
+          <input
+            className="form-control"
+            id="paymentMode"
+            name="paymentMode"
+            type="radio"
+            value="Virement"
+            onChange={props.handleChange}
+            required
+          />
+          <input
+            className="form-control"
+            id="paymentMode"
+            name="paymentMode"
+            type="radio"
+            value="Autre"
+            onChange={props.handleChange}
+            required
+          />
+        </div>
       </div>
     </React.Fragment>
   );
@@ -392,71 +674,79 @@ function Step4(props) {
   return (
     <React.Fragment>
       <div className="form-group">
-        <h2>Super !</h2>
-        <p>
-          Maintenant nous aimerions comprendre vos besoins, pourquoi
-          souhaitez-vous créer de nouvelles habitudes de relaxation ?
-        </p>
-        <input
-          className="form-control"
-          id="needs"
-          name="needs"
-          type="checkbox"
-          placeholder="Moins stresser"
-          value="Stress"
-          onChange={props.handleClick4}
-        />
-        <label>
-          <span>Moins stresser</span>
-        </label>
-        <input
-          className="form-control"
-          id="needs"
-          name="needs"
-          type="checkbox"
-          placeholder="Me changer les idées"
-          value="Me changer les idées"
-          onChange={props.handleClick4}
-        />
-        <label>
-          <span>Me changer les idées</span>
-        </label>
-        <input
-          className="form-control"
-          id="needs"
-          name="needs"
-          type="checkbox"
-          placeholder="Partager des intérêts avec mes proches"
-          value="Partager des intérêts avec mes proches"
-          onChange={props.handleClick4}
-        />
-        <label>
-          <span>Partager des intérêts avec mes proches</span>
-        </label>
-        <input
-          className="form-control"
-          id="needs"
-          name="needs"
-          type="checkbox"
-          placeholder="M'inspirer"
-          value="M'inspirer"
-          onChange={props.handleClick4}
-        />
-        <label>
-          <span>M'inspirer</span>
-        </label>
-        <input
-          className="form-control"
-          id="needs"
-          name="needs"
-          type="checkbox"
-          placeholder="Mieux occuper mon temps libre"
-          value="Mieux occuper mon temps libre"
-          onChange={props.handleClick4}
-        />
-        <label>
-          <span>Mieux occuper mon temps libre</span>
-        </label>
+        <div>
+          <h2>Informations sur le contact technique</h2>
+          <label htmlFor="firstNameTechnical">
+            Prénom du contact technique
+          </label>
+          <input
+            className="form-control"
+            id="firstNameTechnical"
+            name="firstNameTechnical"
+            type="text"
+            placeholder="Prénom"
+            value={props.firstNameTechnical}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="lastNameTechnical">Nom du contact technique</label>
+          <input
+            className="form-control"
+            id="lastNameTechnical"
+            name="lastNameTechnical"
+            type="text"
+            placeholder="Nom"
+            value={props.lastNameTechnical}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="emailTechnical">
+            Addresse email du contact technique
+          </label>
+          <input
+            className="form-control"
+            id="emailTechnical"
+            name="emailTechnical"
+            type="text"
+            placeholder="Enter email"
+            value={props.emailTechnical}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="phoneTechnical">
+            Téléphone fixe du contact technique
+          </label>
+          <input
+            className="form-control"
+            id="phoneTechnical"
+            name="phoneTechnical"
+            type="text"
+            placeholder="Enter phone number"
+            value={props.phoneTechnical}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="cellPhoneTechnical">
+            Téléphone portable du contact technique
+          </label>
+          <input
+            className="form-control"
+            id="cellPhoneTechnical"
+            name="cellPhoneTechnical"
+            type="text"
+            value={props.cellPhoneTechnical}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
       </div>
     </React.Fragment>
   );
@@ -466,82 +756,119 @@ function Step5(props) {
   if (props.currentStep !== 5) {
     return null;
   }
-  if (!props.activities) {
-    return <div>NO subcategories...</div>;
-  }
-
-  const subArray = [
-    ...new Set(props.activities.map((el) => el.subcategories).sort()),
-  ];
-  console.log(subArray);
-
-  const imageArray = [
-    "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1952&q=80",
-    "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80",
-  ];
-
   return (
-    <div className="form-group">
-      <h2>C'est compris !</h2>
-      <p>
-        Pour vous proposer des contenus de relaxation qui vous correspondent,
-        choisissez les activités qui vous intéressent :{" "}
-      </p>
-      {subArray.map((value, index) => {
-        return (
-          <div key={index}>
-            <input
-              className="form-control"
-              id="interest"
-              name="interest"
-              type="checkbox"
-              placeholder={value}
-              value={value}
-              onChange={props.handleClick2}
-            />
-            {<img src={imageArray[index]} alt=""></img>}
-            <label htmlFor={value}>
-              <span>{value}</span>
-            </label>
-          </div>
-        );
-      })}
-    </div>
+    <React.Fragment>
+      <div className="form-group">
+        <div>
+          <h2>Informations sur le point de livraison</h2>
+          <label htmlFor="deliveryCompanyName">Nom de l'enseigne</label>
+          <input
+            className="form-control"
+            id="deliveryCompanyName"
+            name="deliveryCompanyName"
+            type="text"
+            placeholder="Prénom"
+            value={props.deliveryCompanyName}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="deliveryAddress">Addresse de livraison</label>
+          <input
+            className="form-control"
+            id="deliveryAddress"
+            name="deliveryAddress"
+            type="text"
+            placeholder="......"
+            value={props.deliveryAddress}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="deliveryZIPcode">
+            Code postal du point de livraison
+          </label>
+          <input
+            className="form-control"
+            id="deliveryZIPcode"
+            name="deliveryZIPcode"
+            type="text"
+            placeholder="Code postal"
+            value={props.deliveryZIPcode}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="deliveryCity">Ville</label>
+          <input
+            className="form-control"
+            id="deliveryCity"
+            name="deliveryCity"
+            type="text"
+            placeholder="Ville"
+            value={props.deliveryCity}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="deliveryContactEmail">
+            Email du point de livraison
+          </label>
+          <input
+            className="form-control"
+            id="deliveryContactEmail"
+            name="deliveryContactEmail"
+            type="text"
+            value={props.deliveryContactEmail}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="deliveryContactPhone">
+            Téléphone du point de livraison
+          </label>
+          <input
+            className="form-control"
+            id="deliveryContactPhone"
+            name="deliveryContactPhone"
+            type="text"
+            value={props.deliveryContactPhone}
+            onChange={props.handleChange}
+            required
+          />
+        </div>
+      </div>
+    </React.Fragment>
   );
 }
 function Step6(props) {
   if (props.currentStep !== 6) {
     return null;
   }
-  const animalArray = ["Chat", "Chien", "Chat et Chien", "Aucun"];
   return (
     <React.Fragment>
       <div className="form-group">
-        <h2>C'est bientôt fini !</h2>
-        <p>
-          Pour finir, avez-vous des animaux de compagnie figurant dans cette
-          liste ?{" "}
-        </p>
-        {animalArray.map((value, index) => {
-          return (
-            <div key={index}>
-              <input
-                className="form-control"
-                id="animals"
-                name="animals"
-                type="radio"
-                placeholder={value}
-                value={value}
-                onChange={props.handleChange}
-              />
-              <label htmlFor={value}>
-                <span>{value}</span>
-              </label>
-            </div>
-          );
-        })}
+        <h2>Les termes et conditions</h2>
       </div>
-
+      <div>
+        <label htmlFor="contractSigned">
+          Veuillez lire les termes et conditions avant de les accepter
+        </label>
+        <input
+          className="form-control"
+          id="contractSigned"
+          name="contractSigned"
+          type="checkbox"
+          value={props.contractSigned}
+          onChange={props.handleChange}
+          required
+        />
+      </div>
       <button className="btn btn-success btn-block" disabled={props.disabled}>
         Sign up
       </button>
